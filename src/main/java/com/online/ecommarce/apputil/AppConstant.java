@@ -1,11 +1,30 @@
 
 package com.online.ecommarce.apputil;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+
 /**
  * Define global constant of application
  * @author RanjeetSi
  *
  */
 public class AppConstant {
+	
+	public static final Contact DEFAULT_CONTACT = new Contact(
+			"Ranjeet Singh", 
+			"http://www.hcl.com",
+			"ranjeetsi@hcl.com");
+	
+	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Online Ecommarce API",
+			"OnLine Ecommarce API for mobile cleint implementation.", "1.0", "urn:tos", DEFAULT_CONTACT, "online Ecommarce 1.0",
+			"http://www.hcl.com");
+
+	public static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(
+			Arrays.asList("application/json"));  
 	
 	public static final String USER_REGISTRATION_SUCCESSFULLY = "User registration successful";
 	public static final String USER_ID_AND_USERNAME = "You user id or password can not blank.";
