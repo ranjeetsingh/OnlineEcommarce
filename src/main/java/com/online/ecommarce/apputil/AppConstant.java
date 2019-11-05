@@ -20,7 +20,7 @@ public class AppConstant {
 			"ranjeetsi@hcl.com");
 	
 	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Online Ecommarce API",
-			"OnLine Ecommarce API for mobile cleint implementation.", "1.0", "urn:tos", DEFAULT_CONTACT, "online Ecommarce 1.0",
+			"OnLine Ecommarce API.", "1.0", "urn:tos", DEFAULT_CONTACT, "online Ecommarce 1.0",
 			"http://www.hcl.com");
 
 	public static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(
