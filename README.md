@@ -4,7 +4,7 @@ Please find  the git hub url
 -https://github.com/ranjeetsingh/OnlineEcommarce.git
 
 download docker image
--docker pull ranjeetsi/online_ecommerce_system:version_1.0
+-docker pull ranjeetsi/online_ecommerce_system:Version1.1
 
 Swagger Url-
 http://localhost:8086/swagger-ui.html#!/
