@@ -20,6 +20,7 @@ import com.online.ecommarce.testUtills.TestUtills;
 
 /**
  * Test case related to user
+ * 
  * @author RanjeetSi
  *
  */
@@ -30,48 +31,36 @@ class UserControllerTest extends TestUtills {
 	/*
 	 * @Autowired private UserController userController;
 	 */
-	
 
 	@BeforeEach
 	public void setUp() {
 		super.setUp();
 	}
-	 
-	
-	/**
-	 * test  user registration
-	 */
-		@Test
-		public void testUserRegistration() {
-		
-		/*
-		 * UserRequest userRequest = new UserRequest(); userRequest.setUserId("user05");
-		 * userRequest.setUserName("Bipin"); ResponseEntity<Object> obj =
-		 * userController.userRegistration(userRequest); System.out.println(obj +
-		 * "===>"); Assert.assertEquals(201, obj.getStatusCodeValue());
-		 */
-		 
-			
-			String uri = "/userRegistration";
-			try {
-				UserRequest userRequest = new UserRequest();
-				userRequest.setUserId("user05");
-				userRequest.setUserName("Bipin");
-				
-				String inputJson = super.mapToJson(userRequest);
-				MvcResult mvcResult = mvc.perform(
-						MockMvcRequestBuilders.post(uri).
-						contentType(MediaType.APPLICATION_JSON_VALUE).
-						content(inputJson))
-						.andReturn();
 
-				int status = mvcResult.getResponse().getStatus();
-				assertEquals(201, status);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+	/**
+	 * test user registration
+	 */
+	@Test
+	public void testUserRegistration() {
+
+		String uri = "/userRegistration";
+		try {
+			UserRequest userRequest = new UserRequest();
+			userRequest.setUserId("user05");
+			userRequest.setUserName("Bipin");
+
+			String inputJson = super.mapToJson(userRequest);
+			MvcResult mvcResult = mvc.perform(
+					MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
+					.andReturn();
+
+			int status = mvcResult.getResponse().getStatus();
+			assertEquals(201, status);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+	}
 
 }

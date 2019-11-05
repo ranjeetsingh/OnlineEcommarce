@@ -40,18 +40,6 @@ class ProductControllerTest extends TestUtills {
 	 */
 	@Test
 	public void testAddProduct() {
-		/*
-		 * ProductRequest productRequest = new ProductRequest();
-		 * productRequest.setCatlogId("catlog05");
-		 * productRequest.setProductName("Hero Honda");
-		 * productRequest.setProductPrice(58000);
-		 * productRequest.setProductQuantity("50");
-		 * productRequest.setProductAvailabilty("H");
-		 * productRequest.setProductDescription("Black color "); ResponseEntity<Object>
-		 * obj = productController.addProduct(productRequest);
-		 * System.out.println(obj+"===>"); Assert.assertEquals(201,
-		 * obj.getStatusCodeValue());
-		 */
 
 		String uri = "/addProduct";
 		try {
