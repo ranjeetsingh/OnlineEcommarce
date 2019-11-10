@@ -1,24 +1,25 @@
 package com.online.ecommarce.model;
 
 /**
- * ProductResponse for creating response
+ * ProductCartItem for creating response
+ * 
  * @author RanjeetSi
  *
  */
-public class ProductResponse {
+
+public class ProductCartItem {
+
 	private long productId;
-	private long catlogId;
 	private String productName;
 	private double productPrice;
 	private int productQuantity;
 	private String productAvailabilty;
 	private String productDescription;
 
-	public ProductResponse(long productId, long catlogId, String productName, double productPrice, int productQuantity,
+	public ProductCartItem(long productId, String productName, double productPrice, int productQuantity,
 			String productAvailabilty, String productDescription) {
 		super();
 		this.productId = productId;
-		this.catlogId = catlogId;
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.productQuantity = productQuantity;
@@ -26,12 +27,13 @@ public class ProductResponse {
 		this.productDescription = productDescription;
 	}
 
-	public int getProductQuantity() {
-		return productQuantity;
-	}
-
-	public void setProductQuantity(int productQuantity) {
-		this.productQuantity = productQuantity;
+	public ProductCartItem(ProductCartItem productData) {
+		productId = productData.productId;
+		productName = productData.productName;
+		productPrice = productData.productPrice;
+		productQuantity = productData.productQuantity;
+		productAvailabilty = productData.productAvailabilty;
+		productDescription = productData.productDescription;
 	}
 
 	public long getProductId() {
@@ -58,6 +60,14 @@ public class ProductResponse {
 		this.productPrice = productPrice;
 	}
 
+	public int getProductQuantity() {
+		return productQuantity;
+	}
+
+	public void setProductQuantity(int productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
 	public String getProductAvailabilty() {
 		return productAvailabilty;
 	}
@@ -74,12 +84,6 @@ public class ProductResponse {
 		this.productDescription = productDescription;
 	}
 
-	public long getCatlogId() {
-		return catlogId;
-	}
 
-	public void setCatlogId(long catlogId) {
-		this.catlogId = catlogId;
-	}
-
+	
 }

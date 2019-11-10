@@ -16,7 +16,11 @@ import com.online.ecommarce.entity.CartSummary;
  */
 @Repository
 public interface CartSummaryRepository extends JpaRepository<CartSummary, Long> {
-	
-	@Query("SELECT c FROM CartSummary c WHERE c.userId = :userId")
-	public List<CartSummary>  getCartSummary(@Param("userId") String userId);
+	/**
+	 * fetch the cart summary on the basis of cartId
+	 * @param cartId
+	 * @return List<CartSummary>
+	 */
+	@Query("SELECT c FROM CartSummary c WHERE c.cartId = :cartId")
+	public List<CartSummary>  getCartSummary(@Param("cartId") String cartId);
 }

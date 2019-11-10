@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.online.ecommarce.entity.User;
-import com.online.ecommarce.iservice.iUser;
+import com.online.ecommarce.iservice.IUserService;
 import com.online.ecommarce.model.UserRequest;
 import com.online.ecommarce.repository.UserRepository;
 /**
@@ -13,21 +13,28 @@ import com.online.ecommarce.repository.UserRepository;
  *
  */
 @Service
-public class UserImpl implements iUser{
+public class UserServiceImpl implements IUserService{
 
 	@Autowired
 	private UserRepository userReposiotry;
 	
 	/**
-	 * save user information in user tbl
+	 * This method use to save user information in user tbl
+	 * @param UserRequest
+	 * @return User
+	 * @exception
 	 */
 	@Override
 	public User userRegistation(UserRequest request) {
-		User userEntity = new User();
-		userEntity.setUserId(request.getUserId());
-		userEntity.setUserName(request.getUserName());
-		User userdata = userReposiotry.save(userEntity);
-		return userdata;
+		try {
+			User userEntity = new User();
+			userEntity.setUserEmailId(request.getUserEmailId());
+			userEntity.setUserName(request.getUserName());
+			User userdata = userReposiotry.save(userEntity);
+			return userdata;
+		} catch (Exception e) {
+			return null;
+		}
 		
 	}
 

@@ -7,7 +7,12 @@ import com.online.ecommarce.model.CatlogRequest;
  * @author RanjeetSi
  *
  */
-public interface iCatlog {
+public interface ICatlogService {
+	/**
+	 * add item in Catlog table
+	 * @param productData
+	 * @return Catlog
+	 */
 	Catlog addCatlog(CatlogRequest catlogRequest);
 	
 

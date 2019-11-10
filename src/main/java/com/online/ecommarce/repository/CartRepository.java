@@ -18,28 +18,62 @@ import com.online.ecommarce.entity.CartSummary;
  */
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
-	
+	/**
+	 * update order item quantity
+	 * @param productId
+	 * @param productQuantity
+	 * @param cartId
+	 * @param productPrice
+	 * @return int
+	 */
 	 @Modifying
-	 @Query("UPDATE Cart c SET c.productQuantity = :productQuantity WHERE c.userId = :userId AND c.productId = :productId")
-	public int  UpdateItemQuantityInCart(@Param("userId") String userId, @Param("productId") long productId,@Param("productQuantity") String productQuantity);
+	 @Query("UPDATE Cart c SET c.productOrderQuantity = :productQuantity,c.productPrice = :productPrice WHERE c.cartId = :cartId AND c.productId = :productId")
+	public int  UpdateItemQuantityInCart(@Param("productId") long productId,@Param("productQuantity") int productQuantity,
+			@Param("cartId") String cartId,@Param("productPrice") double productPrice);
 
-	//@Query("DELETE FROM Cart c WHERE c.userId = :userId AND c.productId = :productId")
+	/**
+	 * Remove single item from cart table on basis of cart id and product id
+	 * @param productId
+	 * @param cartId
+	 * @return int
+	 */
 	@Modifying
-	@Query("UPDATE Cart c SET c.productStatus = :productStatus WHERE c.userId = :userId AND c.productId = :productId")
-	public int  RemoveItemFromCart(@Param("userId") String userId, @Param("productId") long productId,@Param("productStatus") String productStatus);
+	@Query("DELETE FROM Cart c WHERE c.cartId = :cartId AND c.productId = :productId")
+	public int  RemoveItemFromCart(@Param("productId") long productId,@Param("cartId") String cartId);
 
-	//remove all item from cart related to user
+	/**
+	 * Remove all item from cart table on basis of cart Id
+	 * @param cartId
+	 * @return int
+	 */
 	@Modifying
-	@Query("UPDATE Cart c SET c.productStatus = :productStatus WHERE c.userId = :userId")
-	public int  ClearAllItemFromCart(@Param("userId") String userId,@Param("productStatus") String productStatus);
+	@Query("DELETE FROM Cart c WHERE c.cartId = :cartId")
+	public int  ClearAllItemFromCart(@Param("cartId") String cartId);
 	
-	//get product already exists or not in cart table
+	/**
+	 * check product already exists or not in cart table
+	 * @param userId
+	 * @param productId
+	 * @return Cart
+	 */
 	@Query("SELECT c FROM Cart c WHERE c.userId = :userId AND c.productId = :productId")
-	public Cart  getProdcutDetailsFromCart(@Param("userId") String userId, @Param("productId") long productId);
+	public Cart  getProdcutDetailsFromCart(@Param("userId") long userId, @Param("productId") long productId);
 	
-	//get user exists or not in cart table
+	/**
+	 * check user exists or not in cart table
+	 * @param userId
+	 * @return List<Cart>
+	 */
 	@Query("SELECT c FROM Cart c WHERE c.userId = :userId")
-	public List<Cart>  getUserExists(@Param("userId") String userId);
+	public List<Cart>  getUserExists(@Param("userId") long userId);
+	
+	/**
+	 * fetch cart details on the basis of cart Id
+	 * @param cartId
+	 * @return List<Cart>
+	 */
+	@Query("SELECT c FROM Cart c WHERE c.cartId = :cartId")
+	public List<Cart>  fetchCartItemByCartId(@Param("cartId") String cartId);
 	
 	
 

@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.online.ecommarce.entity.CartSummary;
 
-//Not Use this class
+/**
+ * CartSummary for creating response
+ * @author RanjeetSi
+ *
+ */
 public class CartSummaryResponse {
 	private List<CartSummary> cartDescription;
 

@@ -1,5 +1,13 @@
 package com.online.ecommarce.model;
 
+import java.util.List;
+
+/**
+ * Common Response Model for All Api
+ * @author RanjeetSi
+ *
+ */
+
 public class ResponseModel {
 	
 	private Boolean status;
@@ -46,7 +54,6 @@ public class ResponseModel {
 		this.data = data;
 		this.errorCode = errorCode;
 	}
-	
 	
 	
 	

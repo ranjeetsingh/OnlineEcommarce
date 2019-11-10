@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.online.ecommarce.model.CatlogRequest;
-import com.online.ecommarce.testUtills.TestUtills;
+import com.online.ecommarce.testUtills.JUnitUtils;
 
 /**
  * Add Category
@@ -25,7 +25,7 @@ import com.online.ecommarce.testUtills.TestUtills;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class CatLogControllerTest extends TestUtills {
+class CatLogControllerTest extends JUnitUtils {
 
 	/*
 	 * @Autowired private CatLogController catLogController;
@@ -40,7 +40,7 @@ class CatLogControllerTest extends TestUtills {
 	 * test add category in category table
 	 */
 	@Test
-	public void testAddCatlog() {
+	public void test_AddCatlog_When_Success() {
 
 		String uri = "/addCatlog";
 		try {

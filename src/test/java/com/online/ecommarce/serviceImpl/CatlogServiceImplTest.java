@@ -27,10 +27,10 @@ import com.online.ecommarce.repository.CatlogRepository;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class CatlogImplTest {
+class CatlogServiceImplTest {
 	
 	@InjectMocks
-	private CatlogImpl catlogImpl;
+	private CatlogServiceImpl catlogImpl;
 	@Mock
 	private CatlogRepository catlogRepository;
 
@@ -39,22 +39,24 @@ class CatlogImplTest {
 		MockitoAnnotations.initMocks(this);
 	} 
 	
-	
+	/**
+	 * test success when add catlog in catlog table
+	 */
 	@Test
-	public void testAddCatlog() {
+	public void test_AddCatlog_When_Success() {
 		CatlogRequest catlogRequest = new CatlogRequest();
 		catlogRequest.setCatlogId("catlog04");
 		catlogRequest.setCatlogName("Washing Machine");
 		
 		Catlog catlog = new Catlog();
 		Catlog catlogEntity = new Catlog();
-		catlogEntity.setCatlogId("1");
+		//catlogEntity.setCatlogId("1");
 		catlogEntity.setCatlogName("Cat01");
 		
 		when(catlogRepository.save(Mockito.any())).thenReturn(catlogEntity);
 		
 		catlog = catlogImpl.addCatlog(catlogRequest);
-		Assert.assertEquals(catlog.getCatlogId(),catlogEntity.getCatlogId());
+		Assert.assertEquals(catlog.getCatlogName(),catlogEntity.getCatlogName());
 		
 		
 		

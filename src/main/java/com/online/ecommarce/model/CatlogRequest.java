@@ -1,5 +1,11 @@
 package com.online.ecommarce.model;
 
+/**
+ * catlogRequest for creating request
+ * @author RanjeetSi
+ *
+ */
+
 public class CatlogRequest {
 	private String catlogId;
 	private String catlogName;

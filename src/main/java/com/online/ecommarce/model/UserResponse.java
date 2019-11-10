@@ -1,19 +1,26 @@
 package com.online.ecommarce.model;
 
+/**
+ * UserResponse for creating response
+ * @author RanjeetSi
+ *
+ */
+
 public class UserResponse {
-	private String userId;
+	private String userEmailId;
 	private String userName;
 	
-	public UserResponse(String userId, String userName) {
+	
+	public UserResponse(String userEmailId, String userName) {
 		super();
-		this.userId = userId;
+		this.userEmailId = userEmailId;
 		this.userName = userName;
 	}
-	public String getUserId() {
-		return userId;
+	public String getUserEmailId() {
+		return userEmailId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEmailId(String userEmailId) {
+		this.userEmailId = userEmailId;
 	}
 	public String getUserName() {
 		return userName;

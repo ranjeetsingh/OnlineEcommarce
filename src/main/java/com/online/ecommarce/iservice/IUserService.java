@@ -7,7 +7,12 @@ import com.online.ecommarce.model.UserRequest;
  * @author RanjeetSi
  *
  */
-public interface iUser {
+public interface IUserService {
+	/**
+	 * User register method
+	 * @param UserRequest
+	 * @return User
+	 */
 	User userRegistation(UserRequest request);
 	
 

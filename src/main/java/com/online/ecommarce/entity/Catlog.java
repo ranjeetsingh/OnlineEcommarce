@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 /**
- * Create Catlog table
+ * Create Catlog Entity
  * @author RanjeetSi
  *
  */
@@ -14,7 +14,6 @@ public class Catlog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String catlogId;
 	private String catlogName;
 	public long getId() {
 		return id;
@@ -22,12 +21,7 @@ public class Catlog {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getCatlogId() {
-		return catlogId;
-	}
-	public void setCatlogId(String catlogId) {
-		this.catlogId = catlogId;
-	}
+	
 	public String getCatlogName() {
 		return catlogName;
 	}

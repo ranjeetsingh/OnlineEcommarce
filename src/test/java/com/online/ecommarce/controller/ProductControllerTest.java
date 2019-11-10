@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.online.ecommarce.model.ProductRequest;
-import com.online.ecommarce.testUtills.TestUtills;
+import com.online.ecommarce.testUtills.JUnitUtils;
 
 /**
  * test for add product in product table
@@ -25,7 +25,7 @@ import com.online.ecommarce.testUtills.TestUtills;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ProductControllerTest extends TestUtills {
+class ProductControllerTest extends JUnitUtils {
 
 	/*
 	 * @Autowired private ProductController productController;
@@ -39,15 +39,15 @@ class ProductControllerTest extends TestUtills {
 	 * test for add product in table
 	 */
 	@Test
-	public void testAddProduct() {
+	public void test_AddProduct_When_Success() {
 
 		String uri = "/addProduct";
 		try {
 			ProductRequest productRequest = new ProductRequest();
-			productRequest.setCatlogId("catlog05");
+			productRequest.setCatlogId(5);
 			productRequest.setProductName("Scooty");
 			productRequest.setProductPrice(58000);
-			productRequest.setProductQuantity("50");
+			productRequest.setProductQuantity(50);
 			productRequest.setProductAvailabilty("H");
 			productRequest.setProductDescription("Black color ");
 

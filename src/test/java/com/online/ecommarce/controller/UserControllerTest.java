@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,7 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.online.ecommarce.model.UserRequest;
-import com.online.ecommarce.testUtills.TestUtills;
+import com.online.ecommarce.testUtills.JUnitUtils;
 
 /**
  * Test case related to user
@@ -26,7 +25,7 @@ import com.online.ecommarce.testUtills.TestUtills;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class UserControllerTest extends TestUtills {
+class UserControllerTest extends JUnitUtils {
 
 	/*
 	 * @Autowired private UserController userController;
@@ -41,13 +40,13 @@ class UserControllerTest extends TestUtills {
 	 * test user registration
 	 */
 	@Test
-	public void testUserRegistration() {
+	public void test_UserRegister_When_Success() {
 
 		String uri = "/userRegistration";
 		try {
 			UserRequest userRequest = new UserRequest();
-			userRequest.setUserId("user05");
-			userRequest.setUserName("Bipin");
+			userRequest.setUserEmailId("user055");
+			userRequest.setUserName("Bipin5");
 
 			String inputJson = super.mapToJson(userRequest);
 			MvcResult mvcResult = mvc.perform(

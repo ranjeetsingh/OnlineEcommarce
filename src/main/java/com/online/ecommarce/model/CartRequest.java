@@ -1,32 +1,41 @@
 package com.online.ecommarce.model;
 
-public class CartRequest {
-	private String userId;
+/**
+ * CartRequest for creating request
+ * @author RanjeetSi
+ *
+ */
+
+public class CartRequest{
+	private long userId;
 	private long productId;
-	private String quantity;
+	private int quantity;
+	private String cartId;
 	
-	
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	
 	public long getProductId() {
 		return productId;
 	}
 	public void setProductId(long productId) {
 		this.productId = productId;
 	}
-	public String getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(String quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public String getCartId() {
+		return cartId;
+	}
+	public void setCartId(String cartId) {
+		this.cartId = cartId;
 	}
 	
 
-	
-	
 }

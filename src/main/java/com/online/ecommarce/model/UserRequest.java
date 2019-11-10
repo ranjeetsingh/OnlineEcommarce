@@ -1,14 +1,21 @@
 package com.online.ecommarce.model;
 
+/**
+ * UserRequest for creating request
+ * @author RanjeetSi
+ *
+ */
+
 public class UserRequest {
-	private String userId;
+	private String userEmailId;
 	private String userName;
 	
-	public String getUserId() {
-		return userId;
+	
+	public String getUserEmailId() {
+		return userEmailId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEmailId(String userEmailId) {
+		this.userEmailId = userEmailId;
 	}
 	public String getUserName() {
 		return userName;

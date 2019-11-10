@@ -4,8 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 /**
- * Create Cart Summary table
+ * Create Cart Summary Entity
  * @author RanjeetSi
  *
  */
@@ -14,7 +15,7 @@ public class CartSummary {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String userId;
+	private String cartId;
 	private long productId;
 	private String productName;
 	private double productPrice;
@@ -28,15 +29,14 @@ public class CartSummary {
 		this.id = id;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getCartId() {
+		return cartId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setCartId(String cartId) {
+		this.cartId = cartId;
 	}
 
-	
 	public long getProductId() {
 		return productId;
 	}
@@ -52,7 +52,7 @@ public class CartSummary {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	 
+
 	public String getActioDescription() {
 		return actioDescription;
 	}
@@ -69,5 +69,4 @@ public class CartSummary {
 		this.productPrice = productPrice;
 	}
 
-	
 }

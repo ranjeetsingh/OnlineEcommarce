@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.online.ecommarce.apputil.AppConstant;
+import com.online.ecommarce.controller.ivalidator.IDataRequestValidator;
 import com.online.ecommarce.entity.User;
-import com.online.ecommarce.iservice.iUser;
+import com.online.ecommarce.iservice.IUserService;
 import com.online.ecommarce.model.ResponseModel;
 import com.online.ecommarce.model.UserRequest;
 import com.online.ecommarce.model.UserResponse;
 
 /**
- * Action related User
+ * All operation related User
  * @author RanjeetSi
  *
  */
@@ -24,41 +25,45 @@ import com.online.ecommarce.model.UserResponse;
 public class UserController {
 	
 	@Autowired
-	private iUser iUser;
-	
+	private IUserService userService;
+	@Autowired
+	private IDataRequestValidator validatorService;
+
 	/**
-	 * use for user registration
-	 * @param request
-	 * @return
+	 * This is a POST method is use for user register
+	 * @param UserRequest
+	 * @return ResponseEntity<Object>
+	 * @Exception
 	 */
 	@PostMapping("/userRegistration")
-	public ResponseEntity<Object> userRegistration(@RequestBody UserRequest request) {
+	public ResponseEntity<Object> userRegister(@RequestBody UserRequest request) {
+		ResponseEntity<Object> responseEntity = null;
 		try {
-			if(request.getUserId() == null || request.getUserName() == null) {// check request value null
-				return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_ID_CAN_NOT_NULL, null, 1),
-						HttpStatus.NOT_ACCEPTABLE);
-			}
-			if (request.getUserId() == "" || request.getUserName() == "") {// check for request value not empty
-				return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_ID_AND_USERNAME, null, 1),
-						HttpStatus.NOT_FOUND);
-			}else {
-			User userData = (User) iUser.userRegistation(request);
-			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_REGISTRATION_SUCCESSFULLY,
-					new UserResponse(userData.getUserId(), userData.getUserName()), 0), HttpStatus.CREATED);
+			// Validation pattern for Data Validation for user name and email
+			responseEntity = validatorService.validateUserNameAndUserEmail(request);
+			//check responseEntity is null then user register 
+			if(responseEntity == null) {	
+			User userData = (User) userService.userRegistation(request);
+			responseEntity =  new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_REGISTRATION_SUCCESSFULLY,
+					new UserResponse(userData.getUserEmailId(), userData.getUserName()), 0), HttpStatus.CREATED);
 			}
 		} catch (Exception e) {
 
-			return new ResponseEntity<Object>(new ResponseModel(false, e.getMessage(), null, 0),
+			responseEntity =  new ResponseEntity<Object>(new ResponseModel(false, e.getMessage(), null, 0),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
+		return responseEntity;
 	}
 	/**
-	 * test method for docker 
+	 * This is a Get method is used to test
+	 * @return String
+	 * @Exception
 	 */
 	@GetMapping("/getTest")
 	public String getTest() {
 		return "Hello Test";
 	}
+	
 
 }

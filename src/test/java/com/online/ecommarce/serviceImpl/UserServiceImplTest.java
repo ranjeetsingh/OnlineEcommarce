@@ -25,10 +25,10 @@ import com.online.ecommarce.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class UserImplTest {
+class UserServiceImplTest {
 	
 	@InjectMocks
-	private UserImpl mockUserImpl;
+	private UserServiceImpl mockUserImpl;
 	
 	@Mock
 	private UserRepository userReposiotry;
@@ -42,18 +42,18 @@ class UserImplTest {
 	 * test case for user registration
 	 */
 	@Test
-	public void testUserRegistation() {
+	public void test_UserRegistation_When_Success() {
 		UserRequest userRequest = new UserRequest();
-		userRequest.setUserId("user04");
+		userRequest.setUserEmailId("user04");
 		userRequest.setUserName("Ranjeet");
 		
 		User userInfo = new User();
 		User userEntity = new User();
-		userEntity.setUserId("user04");
+		userEntity.setUserEmailId("4");
 		userEntity.setUserName("Ranjeet");
 		when(userReposiotry.save(Mockito.any())).thenReturn(userEntity);
 		
 		userInfo = mockUserImpl.userRegistation(userRequest);
-		Assert.assertEquals(userInfo.getUserId(), userEntity.getUserId());
+		Assert.assertEquals(userInfo.getUserEmailId(), userEntity.getUserEmailId());
 	}
 }

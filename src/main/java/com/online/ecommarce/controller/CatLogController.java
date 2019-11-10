@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.online.ecommarce.apputil.AppConstant;
+import com.online.ecommarce.controller.ivalidator.IDataRequestValidator;
 import com.online.ecommarce.entity.Catlog;
-import com.online.ecommarce.iservice.iCatlog;
+import com.online.ecommarce.iservice.ICatlogService;
 import com.online.ecommarce.model.CatlogRequest;
 import com.online.ecommarce.model.CatlogResponse;
 import com.online.ecommarce.model.ResponseModel;
 /**
- * Action related catlog
+ * All operation related catlog
  * @author RanjeetSi
  *
  */
@@ -22,34 +23,36 @@ import com.online.ecommarce.model.ResponseModel;
 public class CatLogController {
 
 	@Autowired
-	private iCatlog icatlog;
-
+	private ICatlogService catlogService;
+	@Autowired
+	private IDataRequestValidator validatorService;
+	
 	/**
-	 * add catlog in catlog tbl
-	 * 
-	 * @param request
-	 * @return
+	 * This is a POST method to add product Category in catlog tbl
+	 * @param CatlogRequest
+	 * @return ResponseEntity<Object>
+	 * @Exception
 	 */
+	
 	@PostMapping("/addCatlog")
-	public ResponseEntity<Object> addCatlog(@RequestBody CatlogRequest request) {
+	public ResponseEntity<Object> addProductCategoryInCatlog(@RequestBody CatlogRequest request) {
+		ResponseEntity<Object> responseEntity = null;
 		try {
-			if (request.getCatlogId() == null || request.getCatlogName() == null 
-					|| request.getCatlogId() == "" || request.getCatlogName() == "") {
-				return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.CAT_LOG_CAN_NOT_EMPTY, null, 1),
-						HttpStatus.NOT_FOUND);
-			} else {
-				Catlog catlogData = (Catlog) icatlog.addCatlog(request);
-				return new ResponseEntity<Object>(
-						new ResponseModel(true, AppConstant.CAT_LOG_ADD_SUCCESS,
-								new CatlogResponse(catlogData.getCatlogId(), catlogData.getCatlogName()), 0),
-						HttpStatus.CREATED);
+			// Validation pattern for Data Validation for catlogName
+			responseEntity = validatorService.validateCatlogName(request);
+			//check responseEntity is null then add item in catlog table
+			if (responseEntity == null) {
+				Catlog catlogData = (Catlog) catlogService.addCatlog(request);
+				responseEntity = new ResponseEntity<Object>(new ResponseModel(true, AppConstant.CAT_LOG_ADD_SUCCESS,
+						new CatlogResponse(catlogData.getCatlogName()), 0), HttpStatus.CREATED);
 			}
 		} catch (Exception e) {
 
-			return new ResponseEntity<Object>(new ResponseModel(false, e.getMessage(), null, 0),
+			responseEntity = new ResponseEntity<Object>(new ResponseModel(false, e.getMessage(), null, 0),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
+		return responseEntity;
 	}
 
 }

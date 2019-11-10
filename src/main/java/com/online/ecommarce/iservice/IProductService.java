@@ -7,7 +7,12 @@ import com.online.ecommarce.model.ProductRequest;
  * @author RanjeetSi
  *
  */
-public interface iProduct {
+public interface IProductService {
+	/**
+	 * add item in product table
+	 * @param productRequest
+	 * @return Product
+	 */
 	Product addProduct(ProductRequest request);
 	
 

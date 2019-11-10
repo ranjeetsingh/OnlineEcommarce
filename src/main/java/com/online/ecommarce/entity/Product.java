@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 /**
- * Create Product table
+ * Create Product Entity
  * @author RanjeetSi
  *
  */
@@ -16,24 +16,19 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "product_id")
 	private long id;
-	private String catlogId;
+	private long catlogId;
 	private String productName;
 	private double productPrice;
 	private String productDescription;
 	private String productAvailability;
-	private String productQuantity;
+	private int productQuantity;
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getCatlogId() {
-		return catlogId;
-	}
-	public void setCatlogId(String catlogId) {
-		this.catlogId = catlogId;
-	}
+	
 	public String getProductName() {
 		return productName;
 	}
@@ -58,12 +53,19 @@ public class Product {
 	public void setProductAvailability(String productAvailability) {
 		this.productAvailability = productAvailability;
 	}
-	public String getProductQuantity() {
+	public long getCatlogId() {
+		return catlogId;
+	}
+	public void setCatlogId(long catlogId) {
+		this.catlogId = catlogId;
+	}
+	public int getProductQuantity() {
 		return productQuantity;
 	}
-	public void setProductQuantity(String productQuantity) {
+	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
+	
 	
 	
 	

@@ -29,19 +29,28 @@ import com.online.ecommarce.OnlineEcommerceSystemApplication;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = OnlineEcommerceSystemApplication.class)
 @WebAppConfiguration
-public class TestUtills {
+public class JUnitUtils {
 
 	public MockMvc mvc;
 
 	@Autowired
 	WebApplicationContext webApplicationContext;
 
+	/**
+	 * setup MockMvc builder
+	 */
 	protected void setUp() {
 
 		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
 	}
 
+	/**
+	 * this method convert data object to json string
+	 * @param object
+	 * @return
+	 * @throws JsonProcessingException
+	 */
 	protected String mapToJson(Object object) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.writeValueAsString(object);

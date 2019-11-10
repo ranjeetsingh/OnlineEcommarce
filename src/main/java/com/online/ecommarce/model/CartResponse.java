@@ -1,7 +1,10 @@
 package com.online.ecommarce.model;
 
-
-//Not Use this class
+/**
+ * CartResponse for creating response
+ * @author RanjeetSi
+ *
+ */
 public class CartResponse {
 	private String cartResponse;
 

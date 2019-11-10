@@ -27,9 +27,9 @@ import com.online.ecommarce.repository.ProductRepository;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ProductImplTest {
+class ProductServiceImplTest {
 	@InjectMocks
-	private ProductImpl productImpl;
+	private ProductServiceImpl productImpl;
 
 	@Mock
 	private ProductRepository productRepository;
@@ -39,22 +39,24 @@ class ProductImplTest {
 		MockitoAnnotations.initMocks(this);
 	} 
 	
-	
+	/**
+	 * test success when add product success
+	 */
 	@Test
-	public void testAddProduct() {
+	public void test_AddProduct_When_Success() {
 		ProductRequest  prodReq = new ProductRequest();
-		prodReq.setCatlogId("catlog01");
+		prodReq.setCatlogId(1);
 		prodReq.setProductName("iPhone 10");
 		prodReq.setProductPrice(90000);
-		prodReq.setProductQuantity("15");
+		prodReq.setProductQuantity(15);
 		prodReq.setProductAvailabilty("H");
 		prodReq.setProductDescription("Black Color, 16GB RAM");
 		
 		Product productEntity = new Product();
-		productEntity.setCatlogId("catlog01");
+		productEntity.setCatlogId(1);
 		productEntity.setProductName("iPhone 10");
 		productEntity.setProductPrice(90000);
-		productEntity.setProductQuantity("15");
+		productEntity.setProductQuantity(15);
 		productEntity.setProductDescription("Black Color, 16GB RAM");
 		
 		when(productRepository.save(Mockito.any())).thenReturn(productEntity);
