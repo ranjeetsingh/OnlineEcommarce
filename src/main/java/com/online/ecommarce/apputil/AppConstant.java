@@ -53,6 +53,9 @@ public class AppConstant {
 	public static final String USER_NOT_EXISTS = "User not exists.";
 	public static final String PLEASE_ENTER_CART_ID="Please enter cart id";
 	public static final String SOME_THING_WRONG ="Some thing wrong please check it.";
+	public static final String ADD_ITEM_BETWEEN_ONE_TO_FIVE = "You can add item between 1 to 5.";
+	public static final String NO_ITEM_IN_CART = "No item in your cart.";
+	public static final String  USER_CART_ITEM_IN_LIST ="User Cart Item in list";
 	
 	
 	

@@ -69,6 +69,7 @@ public class CartServiceImpl implements ICartService {
 						cartEntity.setProductPrice(productInfo.getProductPrice() * request.getQuantity());
 						cartEntity.setCartId("cart00" + request.getUserId());
 						Cart cartInfo = cartRepository.save(cartEntity);
+						//Need to update product quantity in Table Product
 						String cartId = cartInfo.getCartId();
 						request.setCartId(cartId);
 						// save user action summary
@@ -76,7 +77,7 @@ public class CartServiceImpl implements ICartService {
 						return AppConstant.ADD_PRODUCT_SUCCESS;
 
 					} else {
-						return "You can add item between 1 to 5.";
+						return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
 					}
 
 				}
@@ -123,7 +124,7 @@ public class CartServiceImpl implements ICartService {
 							productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY_NOT;
 						}
 					} else {
-						return "You can update item between 1 to 5.";
+						return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
 					}
 				} else {
 					productOrderUpdateQuantitystatus = AppConstant.ITEM_QUANTITY_LESS;

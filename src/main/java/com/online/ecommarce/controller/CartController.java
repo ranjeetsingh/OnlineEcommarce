@@ -226,9 +226,9 @@ public class CartController {
 
 		// check size of item in cart list
 		if (cartItemRespo.size() == 0) {
-			return new ResponseEntity<Object>(new ResponseModel(true, "No item in your cart.", null, 0), HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.NO_ITEM_IN_CART, null, 0), HttpStatus.OK);
 		} else {
-			return new ResponseEntity<Object>(new ResponseModel(true, "User Cart Item List", cartItemResponse, 0),
+			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_CART_ITEM_IN_LIST, cartItemResponse, 0),
 					HttpStatus.OK);
 		}
 	}
