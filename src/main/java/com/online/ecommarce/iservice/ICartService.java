@@ -1,6 +1,7 @@
 package com.online.ecommarce.iservice;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
@@ -53,9 +54,9 @@ public interface ICartService {
 	/**
 	 * Method fetch Product details from product table
 	 * @param productId
-	 * @return Product
+	 * @return Optional<Product>
 	 */
-	Product fetchProductDetails(long prodcutId);
+	Optional<Product> fetchProductDetails(long prodcutId);
 	
 
 }

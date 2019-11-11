@@ -2,6 +2,7 @@ package com.online.ecommarce.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -209,7 +210,8 @@ public class CartController {
 		List<Cart> cartItemRespo = cartService.fetchUserCartItem(request);
 		for (Cart cartItemDetails : cartItemRespo) {
 			//fetch product details
-			Product productInfo = cartService.fetchProductDetails(cartItemDetails.getProductId());
+			Optional<Product> productData = cartService.fetchProductDetails(cartItemDetails.getProductId());
+			Product  productInfo = productData.get();
 			totalProductPrice = totalProductPrice + cartItemDetails.getProductPrice();
 			ProductCartItem productObj = new ProductCartItem(cartItemDetails.getProductId(),
 					productInfo.getProductName(), cartItemDetails.getProductPrice(),

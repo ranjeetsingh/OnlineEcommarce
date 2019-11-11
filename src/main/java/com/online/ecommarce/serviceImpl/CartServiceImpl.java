@@ -265,11 +265,11 @@ public class CartServiceImpl implements ICartService {
 	 */
 
 	@Override
-	public Product fetchProductDetails(long prodcutId) {
+	public Optional<Product> fetchProductDetails(long productId) {
 		try {
 			//fetch product details from product table
-			Product productInfo = productRepository.fetchProdcutDetails(prodcutId);
-			return productInfo;
+			Optional<Product> productData = productRepository.findById(productId);
+			return productData;
 		} catch (Exception e) {
 			return null;
 		}

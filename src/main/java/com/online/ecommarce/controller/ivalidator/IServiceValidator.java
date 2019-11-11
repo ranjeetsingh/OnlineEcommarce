@@ -17,7 +17,6 @@ import com.online.ecommarce.model.CartRequest;
 public interface IServiceValidator {
 	/**
 	 * Check product is out of stock or not
-	 * 
 	 * @param productData
 	 * @return
 	 */
@@ -25,7 +24,6 @@ public interface IServiceValidator {
 
 	/**
 	 * Check product quantity
-	 * 
 	 * @param cartRequest
 	 * @return
 	 */
