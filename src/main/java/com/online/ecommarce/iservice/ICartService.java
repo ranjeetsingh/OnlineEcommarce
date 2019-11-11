@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
+import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 /**
@@ -48,6 +49,13 @@ public interface ICartService {
 	 * @return List<Cart>
 	 */
 	List<Cart> fetchUserCartItem(CartItemRequest request);
+	
+	/**
+	 * Method fetch Product details from product table
+	 * @param productId
+	 * @return Product
+	 */
+	Product fetchProductDetails(long prodcutId);
 	
 
 }

@@ -40,6 +40,7 @@ public class CartServiceImpl implements ICartService {
 	private CartSummaryRepository cartSummaryRepo;
 	@Autowired
 	private IServiceValidator serviceValidator;
+	
 
 	
 	/**
@@ -69,8 +70,9 @@ public class CartServiceImpl implements ICartService {
 						cartEntity.setCartId("cart00" + request.getUserId());
 						Cart cartInfo = cartRepository.save(cartEntity);
 						String cartId = cartInfo.getCartId();
+						request.setCartId(cartId);
 						// save user action summary
-						maintainUserCartSummary(productInfo, request, AppConstant.YOU_ADD_PRODUCT_IN_CART, cartId);
+						maintainUserCartSummary(productInfo, request, AppConstant.YOU_ADD_PRODUCT_IN_CART);
 						return AppConstant.ADD_PRODUCT_SUCCESS;
 
 					} else {
@@ -107,13 +109,15 @@ public class CartServiceImpl implements ICartService {
 					if (serviceValidator.checkItemQuantity(request)) {
 						// update price on basis of quantity
 						double updateTotalPrice = (fetchProductData.get().getProductPrice() * request.getQuantity());
-						//update product quantity
+						//Execute both or none
+						//update product quantity in Table Cart
 						int updateCartQuantityStatus = cartRepository.UpdateItemQuantityInCart(request.getProductId(),
 								request.getQuantity(), request.getCartId(), updateTotalPrice);
+						//Need to update product quantity in Table Product
 						if (updateCartQuantityStatus == 1) {
 							// save user action summary
 							maintainUserCartSummary(fetchProductData.get(), request,
-									AppConstant.YOU_UPDATE_ITEM_QUANTITY, request.getCartId());
+									AppConstant.YOU_UPDATE_ITEM_QUANTITY);
 							productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY;
 						} else {
 							productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY_NOT;
@@ -146,13 +150,13 @@ public class CartServiceImpl implements ICartService {
 		try {
 			//remove single item from cart
 			int removeCartItemStatus = cartRepository.RemoveItemFromCart(request.getProductId(), request.getCartId());
+			//Need to update product quantity in Table Product
 			if (removeCartItemStatus == 1) {
 				// get product information from product table
 				Optional<Product> fetchProductData = productRepository.findById(request.getProductId());
 
 				// save user action summary
-				maintainUserCartSummary(fetchProductData.get(), request, AppConstant.YOU_REMOVE_ITEM,
-						request.getCartId());
+				maintainUserCartSummary(fetchProductData.get(), request, AppConstant.YOU_REMOVE_ITEM);
 
 				return AppConstant.ITEM_DELETED_SUCCESS;
 			} else {
@@ -176,7 +180,7 @@ public class CartServiceImpl implements ICartService {
 		try {
 			//remove all item from cart
 			int removeAllItemFromCartStatus = cartRepository.ClearAllItemFromCart(request.getCartId());
-
+			//Need to update product quantity in Table Product
 			if (removeAllItemFromCartStatus > 0) {
 				return AppConstant.ALL_ITEM_DELETED;
 			} else {
@@ -228,22 +232,45 @@ public class CartServiceImpl implements ICartService {
 	 * @param productInfo
 	 * @param request 
 	 * @param userAction 
-	 * @param cartId 
 	 * @exception
 	 */
-	private void maintainUserCartSummary(Product productInfo, CartRequest request, String userAction, String cartId) {
+	private void maintainUserCartSummary(Product productInfo, CartRequest request, String userAction) {
 		try {
 			// add action in cart summary tbl
 			CartSummary cartSummary = new CartSummary();
 			cartSummary.setProductId(productInfo.getId());
 			cartSummary.setProductName(productInfo.getProductName());
-			cartSummary.setProductPrice(productInfo.getProductPrice());
-			cartSummary.setCartId(cartId);
+			//when quantity will update then price will update and save updated price in cart summary table 
+			if (userAction.equalsIgnoreCase(AppConstant.YOU_UPDATE_ITEM_QUANTITY)) {
+				cartSummary.setProductPrice(productInfo.getProductPrice()*request.getQuantity());
+			} else {
+				cartSummary.setProductPrice(productInfo.getProductPrice());
+			}
+			cartSummary.setCartId(request.getCartId());
 
 			cartSummary.setActioDescription(userAction);
 			cartSummaryRepo.save(cartSummary);
 		} catch (Exception e) {
 
+		}
+		
+	}
+
+	/**
+	 * This method use to fetch product details from product table
+	 * @param productId
+	 * @return Product
+	 * @exception
+	 */
+
+	@Override
+	public Product fetchProductDetails(long prodcutId) {
+		try {
+			//fetch product details from product table
+			Product productInfo = productRepository.fetchProdcutDetails(prodcutId);
+			return productInfo;
+		} catch (Exception e) {
+			return null;
 		}
 		
 	}

@@ -29,9 +29,9 @@ public class ServiceValidatorImp implements IServiceValidator {
 	@Override
 	public boolean checkProductOutOfStack(Optional<Product> productData) {
 		if (productData.get().getProductQuantity() == 0) {
-			return true;
+			return Boolean.TRUE;
 		} else {
-			return false;
+			return Boolean.FALSE;
 		}
 	}
 
@@ -45,9 +45,9 @@ public class ServiceValidatorImp implements IServiceValidator {
 	public boolean checkItemQuantity(CartRequest cartRequest) {
 
 		if (cartRequest.getQuantity() >= 1 && cartRequest.getQuantity() < 6) {
-			return true;
+			return Boolean.TRUE;
 		} else {
-			return false;
+			return Boolean.FALSE;
 		}
 	}
 

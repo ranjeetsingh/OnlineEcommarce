@@ -36,14 +36,12 @@ public class CartController {
 
 	@Autowired
 	private ICartService cartService;
-	@Autowired
-	private ProductRepository productRepository;
+	
 	@Autowired
 	private IDataRequestValidator validatorService;
 
 	/**
 	 * This is a POST method to Add item in Cart tbl
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 * @Exception
@@ -73,7 +71,6 @@ public class CartController {
 
 	/**
 	 * This is a POST method to update order quantity in Cart tbl
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 * @Exception
@@ -103,7 +100,6 @@ public class CartController {
 
 	/**
 	 * This is a POST method to remove item in Cart tbl
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 * @Exception
@@ -133,7 +129,6 @@ public class CartController {
 
 	/**
 	 * This is a POST method to remove all item in Cart tbl
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 * @Exception
@@ -162,7 +157,6 @@ public class CartController {
 
 	/**
 	 * This is a POST method to fetch cart summary in Cart tbl
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 * @Exception
@@ -178,7 +172,7 @@ public class CartController {
 			if (responseEntity == null) {
 				List<CartSummary> getCartSummary = cartService.getCartSummary(request);
 				// check the size of cart summary list
-				if (getCartSummary.size() == 0) {
+				if (getCartSummary != null && getCartSummary.size() == 0) {
 					responseEntity = new ResponseEntity<Object>(
 							new ResponseModel(true, AppConstant.NO_DATA_IN_CART_SUMMARY, null, 0), HttpStatus.OK);
 				} else {
@@ -199,7 +193,6 @@ public class CartController {
 
 	/**
 	 * This is a POST method to fetch cart item
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 * @Exception
@@ -215,8 +208,8 @@ public class CartController {
 		// fetch cart item
 		List<Cart> cartItemRespo = cartService.fetchUserCartItem(request);
 		for (Cart cartItemDetails : cartItemRespo) {
-
-			Product productInfo = productRepository.fetchProdcutDetails(cartItemDetails.getProductId());
+			//fetch product details
+			Product productInfo = cartService.fetchProductDetails(cartItemDetails.getProductId());
 			totalProductPrice = totalProductPrice + cartItemDetails.getProductPrice();
 			ProductCartItem productObj = new ProductCartItem(cartItemDetails.getProductId(),
 					productInfo.getProductName(), cartItemDetails.getProductPrice(),
@@ -233,7 +226,7 @@ public class CartController {
 
 		// check size of item in cart list
 		if (cartItemRespo.size() == 0) {
-			return new ResponseEntity<Object>(new ResponseModel(true, "No item in you cart.", null, 0), HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResponseModel(true, "No item in your cart.", null, 0), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Object>(new ResponseModel(true, "User Cart Item List", cartItemResponse, 0),
 					HttpStatus.OK);

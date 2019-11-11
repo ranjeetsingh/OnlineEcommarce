@@ -15,7 +15,7 @@ import com.online.ecommarce.model.ResponseModel;
 import com.online.ecommarce.model.UserRequest;
 
 /**
- * this method implement the IDataRequestValidator
+ * this method implement the IRequestDataValidator
  * 
  * @author RanjeetSi
  */
