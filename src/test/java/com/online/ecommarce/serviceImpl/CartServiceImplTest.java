@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jayway.jsonpath.Option;
 import com.online.ecommarce.apputil.AppConstant;
-import com.online.ecommarce.controller.ivalidator.IServiceValidator;
+import com.online.ecommarce.controller.ivalidator.IBusinessValidator;
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
@@ -49,7 +49,7 @@ class CartServiceImplTest {
 	@Mock
 	private CartSummaryRepository cartSummaryRepo;
 	@Mock
-	private IServiceValidator serviceValidator;
+	private IBusinessValidator serviceValidator;
 	
 	@Before(value = "")
 	public void init() {
@@ -78,7 +78,7 @@ class CartServiceImplTest {
 		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		when(serviceValidator.checkProductOutOfStack(productList)).thenReturn(false);
+		//when(serviceValidator.checkProductOutOfStack(productList)).thenReturn(false);
 		//when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
 		Cart cart =new Cart();
 		cart.setId(2);
@@ -124,8 +124,8 @@ class CartServiceImplTest {
 		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		when(serviceValidator.checkProductOutOfStack(productList)).thenReturn(true);
-		//when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
+		//when(serviceValidator.checkProductOutOfStack(productList)).thenReturn(true);
+		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
 		Cart cart =new Cart();
 		cart.setId(2);
 		cart.setProductId(1);

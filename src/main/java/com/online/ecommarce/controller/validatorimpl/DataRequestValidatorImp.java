@@ -3,11 +3,14 @@
  */
 package com.online.ecommarce.controller.validatorimpl;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.online.ecommarce.apputil.AppConstant;
 import com.online.ecommarce.controller.ivalidator.IDataRequestValidator;
+import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.model.CatlogRequest;
 import com.online.ecommarce.model.ProductRequest;
@@ -173,6 +176,21 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 					HttpStatus.NOT_FOUND);
 		}
 		return null;
+	}
+	/**
+	 * This method check product in stock or not
+	 * 
+	 * @param Optional<Product>
+	 * @return boolean
+	 */
+
+	@Override
+	public boolean checkProductOutOfStack(Optional<Product> productData) {
+		if (productData.get().getProductQuantity() == 0) {
+			return Boolean.TRUE;
+		} else {
+			return Boolean.FALSE;
+		}
 	}
 
 }

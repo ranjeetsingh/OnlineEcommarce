@@ -3,10 +3,10 @@ package com.online.ecommarce.apputil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.online.ecommarce.controller.ivalidator.IServiceValidator;
+import com.online.ecommarce.controller.ivalidator.IBusinessValidator;
 import com.online.ecommarce.controller.ivalidator.IDataRequestValidator;
 import com.online.ecommarce.controller.validatorimpl.DataRequestValidatorImp;
-import com.online.ecommarce.controller.validatorimpl.ServiceValidatorImp;
+import com.online.ecommarce.controller.validatorimpl.BusinessValidatorImp;
 
 
 /** 
@@ -34,7 +34,7 @@ public class AppConfig {
 	 *
 	 */
 	@Bean
-	IServiceValidator findIServiceValidator() {
-		return new ServiceValidatorImp();
+	IBusinessValidator findIServiceValidator() {
+		return new BusinessValidatorImp();
 	}
 }

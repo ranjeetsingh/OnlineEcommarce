@@ -3,8 +3,11 @@
  */
 package com.online.ecommarce.controller.ivalidator;
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 
+import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.model.CatlogRequest;
 import com.online.ecommarce.model.ProductRequest;
@@ -87,6 +90,12 @@ public interface IDataRequestValidator {
 	 * @return ResponseEntity<Object>
 	 */
 	public ResponseEntity<Object> validateCatlogName(CatlogRequest request);
-	
+	/**
+	 * Check product is out of stock or not
+	 * @param productData
+	 * @return
+	 */
+	boolean checkProductOutOfStack(Optional<Product> productData);
+
 	
 }

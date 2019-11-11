@@ -55,8 +55,20 @@ public class CartController {
 			responseEntity = validatorService.validateUser(request);
 			// check responseEntity is null then add item in cart
 			if (responseEntity == null) {
-				String addCartDataDetails = cartService.addToCart(request);
-				responseEntity = new ResponseEntity<Object>(new ResponseModel(true, addCartDataDetails, null, 0),
+				String addCartStatusMessage = "";
+				// fetch product details
+				Optional<Product> productData = cartService.fetchProductDetails(request.getProductId());
+				if (productData.isPresent()) {
+					if (validatorService.checkProductOutOfStack(productData)) {
+						addCartStatusMessage = AppConstant.PRODUCT_OUT_STOCK;
+					} else {
+						addCartStatusMessage = cartService.addToCart(request);
+					}
+				} else {
+					addCartStatusMessage = AppConstant.PRODUCT_NOT_EXISTS;
+				}
+				// String addCartDataDetails = cartService.addToCart(request);
+				responseEntity = new ResponseEntity<Object>(new ResponseModel(true, addCartStatusMessage, null, 0),
 						HttpStatus.CREATED);
 			}
 
@@ -85,9 +97,18 @@ public class CartController {
 			responseEntity = validatorService.validateCartId(request);
 			// check responseEntity is null then update item in cart
 			if (responseEntity == null) {
-				String updateCartDataDetails = cartService.updateCartQuantity(request);
-				responseEntity = new ResponseEntity<Object>(new ResponseModel(true, updateCartDataDetails, null, 0),
-						HttpStatus.OK);
+				String updateCartItemStatusMessage = "";
+				// fetch product details
+				Optional<Product> productData = cartService.fetchProductDetails(request.getProductId());
+				// check product availability
+				if (productData.isPresent()) {
+					updateCartItemStatusMessage = cartService.updateCartQuantity(request);
+				} else {
+					updateCartItemStatusMessage = AppConstant.PRODUCT_NOT_EXISTS;
+				}
+				// String updateCartDataDetails = cartService.updateCartQuantity(request);
+				responseEntity = new ResponseEntity<Object>(
+						new ResponseModel(true, updateCartItemStatusMessage, null, 0), HttpStatus.OK);
 			}
 
 		} catch (Exception e) {

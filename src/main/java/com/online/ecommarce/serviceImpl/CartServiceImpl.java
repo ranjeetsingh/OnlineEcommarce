@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.online.ecommarce.apputil.AppConstant;
-import com.online.ecommarce.controller.ivalidator.IServiceValidator;
+import com.online.ecommarce.controller.ivalidator.IBusinessValidator;
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
@@ -39,7 +39,7 @@ public class CartServiceImpl implements ICartService {
 	@Autowired
 	private CartSummaryRepository cartSummaryRepo;
 	@Autowired
-	private IServiceValidator serviceValidator;
+	private IBusinessValidator serviceValidator;
 	
 
 	
@@ -54,35 +54,25 @@ public class CartServiceImpl implements ICartService {
 	public String addToCart(CartRequest request) {
 		try {
 			Optional<Product> productData = productRepository.findById(request.getProductId());
-			// check product is available or not
-			if (productData.isPresent()) {
-				if (serviceValidator.checkProductOutOfStack(productData)) {
-					return AppConstant.PRODUCT_OUT_STOCK;
-				} else {
-					// ValidatorFrameWork for check item quantity
-					if (serviceValidator.checkItemQuantity(request)) {
-						Product productInfo = productData.get();
-						Cart cartEntity = new Cart();
-						cartEntity.setUserId(request.getUserId());
-						cartEntity.setProductId(request.getProductId());
-						cartEntity.setProductOrderQuantity(request.getQuantity());
-						cartEntity.setProductPrice(productInfo.getProductPrice() * request.getQuantity());
-						cartEntity.setCartId("cart00" + request.getUserId());
-						Cart cartInfo = cartRepository.save(cartEntity);
-						//Need to update product quantity in Table Product
-						String cartId = cartInfo.getCartId();
-						request.setCartId(cartId);
-						// save user action summary
-						maintainUserCartSummary(productInfo, request, AppConstant.YOU_ADD_PRODUCT_IN_CART);
-						return AppConstant.ADD_PRODUCT_SUCCESS;
+			// ValidatorFrameWork for check item quantity
+			if (serviceValidator.checkItemQuantity(request)) {
+				Product productInfo = productData.get();
+				Cart cartEntity = new Cart();
+				cartEntity.setUserId(request.getUserId());
+				cartEntity.setProductId(request.getProductId());
+				cartEntity.setProductOrderQuantity(request.getQuantity());
+				cartEntity.setProductPrice(productInfo.getProductPrice() * request.getQuantity());
+				cartEntity.setCartId("cart00" + request.getUserId());
+				Cart cartInfo = cartRepository.save(cartEntity);
+				// Need to update product quantity in Table Product
+				String cartId = cartInfo.getCartId();
+				request.setCartId(cartId);
+				// save user action summary
+				maintainUserCartSummary(productInfo, request, AppConstant.YOU_ADD_PRODUCT_IN_CART);
+				return AppConstant.ADD_PRODUCT_SUCCESS;
 
-					} else {
-						return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
-					}
-
-				}
 			} else {
-				return AppConstant.PRODUCT_NOT_EXISTS;
+				return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
 			}
 		} catch (Exception e) {
 			return AppConstant.SOME_THING_WRONG;
@@ -103,35 +93,28 @@ public class CartServiceImpl implements ICartService {
 		try {
 			String productOrderUpdateQuantitystatus = "";
 			Optional<Product> fetchProductData = productRepository.findById(request.getProductId());
-			// check product availability
-			if (fetchProductData.isPresent()) {
-				// check product item quantity in stock
-				if (fetchProductData.get().getProductQuantity() >= request.getQuantity()) {
-					if (serviceValidator.checkItemQuantity(request)) {
-						// update price on basis of quantity
-						double updateTotalPrice = (fetchProductData.get().getProductPrice() * request.getQuantity());
-						//Execute both or none
-						//update product quantity in Table Cart
-						int updateCartQuantityStatus = cartRepository.UpdateItemQuantityInCart(request.getProductId(),
-								request.getQuantity(), request.getCartId(), updateTotalPrice);
-						//Need to update product quantity in Table Product
-						if (updateCartQuantityStatus == 1) {
-							// save user action summary
-							maintainUserCartSummary(fetchProductData.get(), request,
-									AppConstant.YOU_UPDATE_ITEM_QUANTITY);
-							productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY;
-						} else {
-							productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY_NOT;
-						}
+			// check product item quantity in stock
+			if (fetchProductData.get().getProductQuantity() >= request.getQuantity()) {
+				if (serviceValidator.checkItemQuantity(request)) {
+					// update price on basis of quantity
+					double updateTotalPrice = (fetchProductData.get().getProductPrice() * request.getQuantity());
+					// Execute both or none
+					// update product quantity in Table Cart
+					int updateCartQuantityStatus = cartRepository.UpdateItemQuantityInCart(request.getProductId(),
+							request.getQuantity(), request.getCartId(), updateTotalPrice);
+					// Need to update product quantity in Table Product
+					if (updateCartQuantityStatus == 1) {
+						// save user action summary
+						maintainUserCartSummary(fetchProductData.get(), request, AppConstant.YOU_UPDATE_ITEM_QUANTITY);
+						productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY;
 					} else {
-						return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
+						productOrderUpdateQuantitystatus = AppConstant.CART_ITEM_QUANTITY_NOT;
 					}
 				} else {
-					productOrderUpdateQuantitystatus = AppConstant.ITEM_QUANTITY_LESS;
+					return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
 				}
-
 			} else {
-				productOrderUpdateQuantitystatus = AppConstant.PRODUCT_NOT_EXISTS;
+				productOrderUpdateQuantitystatus = AppConstant.ITEM_QUANTITY_LESS;
 			}
 			return productOrderUpdateQuantitystatus;
 		} catch (Exception e) {
