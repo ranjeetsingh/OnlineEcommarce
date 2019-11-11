@@ -14,11 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jayway.jsonpath.Option;
 import com.online.ecommarce.apputil.AppConstant;
 import com.online.ecommarce.controller.ivalidator.IBusinessValidator;
 import com.online.ecommarce.entity.Cart;
@@ -29,6 +27,7 @@ import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.repository.CartRepository;
 import com.online.ecommarce.repository.CartSummaryRepository;
 import com.online.ecommarce.repository.ProductRepository;
+import com.online.ecommarce.testUtills.JUnitObjectServiceImpl;
 
 
 /**
@@ -39,7 +38,7 @@ import com.online.ecommarce.repository.ProductRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class CartServiceImplTest {
+class CartServiceImplTest extends JUnitObjectServiceImpl {
 	@InjectMocks
 	CartServiceImpl mockCartImpl;
 	@Mock
@@ -62,32 +61,16 @@ class CartServiceImplTest {
 	
 	@Test
 	public void test_AddToCart_When_Success() {
-		CartRequest cartRequest = new CartRequest();
-		cartRequest.setProductId(1);
-		cartRequest.setQuantity(2);
-		cartRequest.setUserId(1);
+		CartRequest cartRequest = cartRequestObj();
 		//cartRequest.setCartId("cart001");
 		
-		Product product = new Product();
-		product.setCatlogId(3);
-		product.setId(1);
-		product.setProductDescription("Mobile");
-		product.setProductName("MI");
-		product.setProductQuantity(20);
-		product.setProductPrice(5000);
-		product.setProductAvailability("Y");
+		Product product = findProductObj();
 		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
 		
 		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
-		Cart cartEntity = new Cart();
-		cartEntity.setUserId(1);
-		cartEntity.setId(1);
-		cartEntity.setProductId(1);
-		cartEntity.setProductOrderQuantity(1);
-		cartEntity.setProductPrice(20000);
-		cartEntity.setCartId("cart001");
+		Cart cartEntity = cartObj();
 		
 		when(cartRepository.save(Mockito.any())).thenReturn(cartEntity);
 		
@@ -102,20 +85,9 @@ class CartServiceImplTest {
 	
 	@Test
 	public void test_UpdateCartQuantity_When_Success() {
-		CartRequest cartRequest = new CartRequest();
-		cartRequest.setProductId(1);
-		cartRequest.setQuantity(2);
-		cartRequest.setUserId(1);
-		cartRequest.setCartId("1");
+		CartRequest cartRequest = cartRequestObj();
 		
-		Product product = new Product();
-		product.setCatlogId(1);
-		product.setId(1);
-		product.setProductDescription("Mobile");
-		product.setProductName("MI");
-		product.setProductQuantity(10);
-		product.setProductPrice(5000);
-		product.setProductAvailability("Y");
+		Product product = findProductObj();
 		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
@@ -136,17 +108,11 @@ class CartServiceImplTest {
 		cartRequest.setUserId(1);
 		cartRequest.setCartId("1");
 		
-		Cart cart =new Cart();
-		cart.setId(1);
-		cart.setProductId(1);
+		Cart cart =cartObj();
 		//when(cartRepository.getProdcutDetailsFromCart(Mockito.anyLong(), Mockito.anyLong())).thenReturn(cart);
 		when(cartRepository.RemoveItemFromCart(Mockito.anyLong(),Mockito.anyString())).thenReturn(1);
 
-		Product product = new Product();
-		product.setCatlogId(1);
-		product.setId(1);
-		product.setProductDescription("Mobile");
-		product.setProductName("MI");
+		Product product = findProductObj();
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
 		
@@ -162,12 +128,9 @@ class CartServiceImplTest {
 	
 	@Test
 	public void test_ClearAllItemFromCart_When_Success() {
-		CartRequest cartRequest = new CartRequest();
-		cartRequest.setCartId("1");
+		CartRequest cartRequest = cartRequestObj();
 		
-		Cart cart =new Cart();
-		cart.setId(1);
-		cart.setProductId(1);
+		Cart cart =cartObj();
 		List<Cart> cartListDetails = new ArrayList<Cart>();
 		cartListDetails.add(cart);
 		
