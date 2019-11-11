@@ -43,7 +43,7 @@ public class ProductController {
 	public ResponseEntity<Object> addProductDetails(@RequestBody ProductRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for product name and product description
+			// ValidatorFrameWork for Data Validation for product name and product description
 			responseEntity = validatorService.validateProductNameAndDescription(request);
 			//check responseEntity is null then add product in table
 			if (responseEntity == null) {

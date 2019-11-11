@@ -50,7 +50,7 @@ public class CartController {
 	public ResponseEntity<Object> addProductInCart(@RequestBody CartRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for user id
+			// ValidatorFrameWork for Data Validation for user id
 			responseEntity = validatorService.validateUser(request);
 			// check responseEntity is null then add item in cart
 			if (responseEntity == null) {
@@ -80,7 +80,7 @@ public class CartController {
 	public ResponseEntity<Object> updateOrderItemQuantity(@RequestBody CartRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for cart id
+			// ValidatorFrameWork for Data Validation for cart id
 			responseEntity = validatorService.validateCartId(request);
 			// check responseEntity is null then update item in cart
 			if (responseEntity == null) {
@@ -109,7 +109,7 @@ public class CartController {
 	public ResponseEntity<Object> removeSingleItemFromCart(@RequestBody CartRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for cart id
+			// ValidatorFrameWork for Data Validation for cart id
 			responseEntity = validatorService.validateCartId(request);
 			// check responseEntity is null then remove item from cart
 			if (responseEntity == null) {
@@ -137,7 +137,7 @@ public class CartController {
 	public ResponseEntity<Object> removeAllItemFromCart(@RequestBody CartRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for cart id
+			// ValidatorFrameWork for Data Validation for cart id
 			responseEntity = validatorService.validateCartId(request);
 			// check responseEntity is null then remove all item from cart
 			if (responseEntity == null) {
@@ -166,7 +166,7 @@ public class CartController {
 	public ResponseEntity<Object> fetchCartSummary(@RequestBody CartRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for cartId
+			// ValidatorFrameWork for Data Validation for cartId
 			responseEntity = validatorService.validateCartId(request);
 			// check responseEntity is null then fetch data from cart summary
 			if (responseEntity == null) {

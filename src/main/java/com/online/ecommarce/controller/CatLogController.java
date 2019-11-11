@@ -38,7 +38,7 @@ public class CatLogController {
 	public ResponseEntity<Object> addProductCategoryInCatlog(@RequestBody CatlogRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for catlogName
+			// ValidatorFrameWork for Data Validation for catlogName
 			responseEntity = validatorService.validateCatlogName(request);
 			//check responseEntity is null then add item in catlog table
 			if (responseEntity == null) {

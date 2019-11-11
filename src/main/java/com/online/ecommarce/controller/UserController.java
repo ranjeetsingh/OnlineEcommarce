@@ -39,7 +39,7 @@ public class UserController {
 	public ResponseEntity<Object> userRegister(@RequestBody UserRequest request) {
 		ResponseEntity<Object> responseEntity = null;
 		try {
-			// Validation pattern for Data Validation for user name and email
+			// ValidatorFrameWork for Data Validation for user name and email
 			responseEntity = validatorService.validateUserNameAndUserEmail(request);
 			//check responseEntity is null then user register 
 			if(responseEntity == null) {	

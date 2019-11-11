@@ -59,7 +59,7 @@ public class CartServiceImpl implements ICartService {
 				if (serviceValidator.checkProductOutOfStack(productData)) {
 					return AppConstant.PRODUCT_OUT_STOCK;
 				} else {
-					// Validation pattern for check item quantity
+					// ValidatorFrameWork for check item quantity
 					if (serviceValidator.checkItemQuantity(request)) {
 						Product productInfo = productData.get();
 						Cart cartEntity = new Cart();
