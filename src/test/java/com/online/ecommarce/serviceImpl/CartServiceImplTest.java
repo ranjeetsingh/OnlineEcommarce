@@ -63,9 +63,10 @@ class CartServiceImplTest {
 	@Test
 	public void test_AddToCart_When_Success() {
 		CartRequest cartRequest = new CartRequest();
-		cartRequest.setProductId(30);
+		cartRequest.setProductId(1);
 		cartRequest.setQuantity(2);
 		cartRequest.setUserId(1);
+		//cartRequest.setCartId("cart001");
 		
 		Product product = new Product();
 		product.setCatlogId(3);
@@ -78,73 +79,20 @@ class CartServiceImplTest {
 		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		//when(serviceValidator.checkProductOutOfStack(productList)).thenReturn(false);
-		//when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
-		Cart cart =new Cart();
-		cart.setId(2);
-		cart.setProductId(1);
-		cart.setProductPrice(20000);
-		cart.setProductOrderQuantity(3);
-		cart.setUserId(3);
-		when(cartRepository.getProdcutDetailsFromCart(Mockito.anyLong(), Mockito.anyLong())).thenReturn(null);
 		
+		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
 		Cart cartEntity = new Cart();
+		cartEntity.setUserId(1);
 		cartEntity.setId(1);
 		cartEntity.setProductId(1);
+		cartEntity.setProductOrderQuantity(1);
 		cartEntity.setProductPrice(20000);
-		cartEntity.setProductPrice(50);
-		cartEntity.setUserId(3);
-		when(cartRepository.save(cartEntity)).thenReturn(null);
-	
+		cartEntity.setCartId("cart001");
+		
+		when(cartRepository.save(Mockito.any())).thenReturn(cartEntity);
 		
 		String getStatus = mockCartImpl.addToCart(cartRequest); 
 		Assert.assertEquals(AppConstant.ADD_PRODUCT_SUCCESS, getStatus);
-		
-	}
-	
-	/**
-	 * add to cart test cases fail
-	 */
-	
-	@Test
-	public void test_AddToCart_When_Fail() {
-		CartRequest cartRequest = new CartRequest();
-		cartRequest.setProductId(30);
-		cartRequest.setQuantity(22);
-		cartRequest.setUserId(1);
-		
-		Product product = new Product();
-		product.setCatlogId(3);
-		product.setId(1);
-		product.setProductDescription("Mobile");
-		product.setProductName("MI");
-		product.setProductQuantity(0);
-		product.setProductPrice(5000);
-		product.setProductAvailability("Y");
-		
-		Optional<Product> productList= Optional.of(product);
-		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		//when(serviceValidator.checkProductOutOfStack(productList)).thenReturn(true);
-		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
-		Cart cart =new Cart();
-		cart.setId(2);
-		cart.setProductId(1);
-		cart.setProductPrice(20000);
-		cart.setProductOrderQuantity(3);
-		cart.setUserId(3);
-		when(cartRepository.getProdcutDetailsFromCart(Mockito.anyLong(), Mockito.anyLong())).thenReturn(null);
-		
-		Cart cartEntity = new Cart();
-		cartEntity.setId(1);
-		cartEntity.setProductId(1);
-		cartEntity.setProductPrice(20000);
-		cartEntity.setProductPrice(50);
-		cartEntity.setUserId(3);
-		when(cartRepository.save(cartEntity)).thenReturn(null);
-	
-		
-		String getStatus = mockCartImpl.addToCart(cartRequest); 
-		Assert.assertEquals(AppConstant.PRODUCT_OUT_STOCK, getStatus);
 		
 	}
 	
@@ -155,7 +103,7 @@ class CartServiceImplTest {
 	@Test
 	public void test_UpdateCartQuantity_When_Success() {
 		CartRequest cartRequest = new CartRequest();
-		cartRequest.setProductId(30);
+		cartRequest.setProductId(1);
 		cartRequest.setQuantity(2);
 		cartRequest.setUserId(1);
 		cartRequest.setCartId("1");
@@ -165,16 +113,14 @@ class CartServiceImplTest {
 		product.setId(1);
 		product.setProductDescription("Mobile");
 		product.setProductName("MI");
-		product.setProductQuantity(20);
+		product.setProductQuantity(10);
 		product.setProductPrice(5000);
 		product.setProductAvailability("Y");
 		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		//when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
+		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
 		when(cartRepository.UpdateItemQuantityInCart(Mockito.anyLong(),Mockito.anyInt(),Mockito.anyString(),Mockito.anyDouble())).thenReturn(1);
-		
-		
 		String getStatus = mockCartImpl.updateCartQuantity(cartRequest);
 		Assert.assertEquals(AppConstant.CART_ITEM_QUANTITY, getStatus);
 	}
@@ -240,7 +186,7 @@ class CartServiceImplTest {
 	@Test
 	public void test_GetCartSummary_When_Success() {
 		CartRequest cartRequest = new CartRequest();
-		cartRequest.setUserId(1);
+		cartRequest.setCartId("1");
 		
 		CartSummary cartSummary = new CartSummary();
 		cartSummary.setId(1);

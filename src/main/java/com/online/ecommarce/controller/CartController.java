@@ -229,26 +229,31 @@ public class CartController {
 
 		// fetch cart item
 		List<Cart> cartItemRespo = cartService.fetchUserCartItem(request);
-		for (Cart cartItemDetails : cartItemRespo) {
-			//fetch product details
-			Optional<Product> productData = cartService.fetchProductDetails(cartItemDetails.getProductId());
-			Product  productInfo = productData.get();
-			totalProductPrice = totalProductPrice + cartItemDetails.getProductPrice();
-			ProductCartItem productObj = new ProductCartItem(cartItemDetails.getProductId(),
-					productInfo.getProductName(), cartItemDetails.getProductPrice(),
-					cartItemDetails.getProductOrderQuantity(), productInfo.getProductAvailability(),
-					productInfo.getProductDescription());
+		if (cartItemRespo != null) {
+			for (Cart cartItemDetails : cartItemRespo) {
+				// fetch product details
+				Optional<Product> productData = cartService.fetchProductDetails(cartItemDetails.getProductId());
+				Product productInfo = productData.get();
+				// calculate total price
+				totalProductPrice = totalProductPrice + cartItemDetails.getProductPrice();
 
-			ProductCartItem productInfoData = new ProductCartItem(productObj);
-			productCartItemList.add(productInfoData);
+				
+				ProductCartItem productObj = new ProductCartItem(cartItemDetails.getProductId(),
+						productInfo.getProductName(), cartItemDetails.getProductPrice(),
+						cartItemDetails.getProductOrderQuantity(), productInfo.getProductAvailability(),
+						productInfo.getProductDescription());
+				 
+				//ProductCartItem productObj = new ProductCartItem(productInfo);
+				productCartItemList.add(productObj);
 
+			}
 		}
 
 		CartItemResponse cartItemResponse = new CartItemResponse(request.getCartId(), totalProductPrice,
 				productCartItemList);
 
 		// check size of item in cart list
-		if (cartItemRespo.size() == 0) {
+		if (cartItemRespo != null && cartItemRespo.size() == 0) {
 			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.NO_ITEM_IN_CART, null, 0), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_CART_ITEM_IN_LIST, cartItemResponse, 0),

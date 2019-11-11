@@ -1,5 +1,7 @@
 package com.online.ecommarce.model;
 
+import com.online.ecommarce.entity.Product;
+
 /**
  * ProductCartItem for creating response
  * 
@@ -26,15 +28,14 @@ public class ProductCartItem {
 		this.productAvailabilty = productAvailabilty;
 		this.productDescription = productDescription;
 	}
-
-	public ProductCartItem(ProductCartItem productData) {
-		productId = productData.productId;
-		productName = productData.productName;
-		productPrice = productData.productPrice;
-		productQuantity = productData.productQuantity;
-		productAvailabilty = productData.productAvailabilty;
-		productDescription = productData.productDescription;
-	}
+	/*
+	 * public ProductCartItem(Product product) { this.productId = product.getId();
+	 * this.productName = product.getProductName(); this.productPrice =
+	 * product.getProductPrice(); this.productQuantity =
+	 * product.getProductQuantity(); this.productAvailabilty =
+	 * product.getProductAvailability(); this.productDescription =
+	 * product.getProductDescription(); }
+	 */
 
 	public long getProductId() {
 		return productId;

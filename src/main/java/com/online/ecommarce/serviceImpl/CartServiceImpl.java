@@ -65,11 +65,15 @@ public class CartServiceImpl implements ICartService {
 				cartEntity.setCartId("cart00" + request.getUserId());
 				Cart cartInfo = cartRepository.save(cartEntity);
 				// Need to update product quantity in Table Product
-				String cartId = cartInfo.getCartId();
-				request.setCartId(cartId);
-				// save user action summary
-				maintainUserCartSummary(productInfo, request, AppConstant.YOU_ADD_PRODUCT_IN_CART);
-				return AppConstant.ADD_PRODUCT_SUCCESS;
+				if (cartInfo != null) {
+					String cartId = cartInfo.getCartId();
+					request.setCartId(cartId);
+					// save user action summary
+					maintainUserCartSummary(productInfo, request, AppConstant.YOU_ADD_PRODUCT_IN_CART);
+					return AppConstant.ADD_PRODUCT_SUCCESS;
+				} else {
+					return AppConstant.ADD_PRODUCT_NOT_SUCCESS;
+				}
 
 			} else {
 				return AppConstant.ADD_ITEM_BETWEEN_ONE_TO_FIVE;
