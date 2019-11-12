@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.online.ecommarce.entity.User;
 import com.online.ecommarce.model.UserRequest;
 import com.online.ecommarce.repository.UserRepository;
+import com.online.ecommarce.testUtills.JUnitObjectServiceImpl;
 
 /**
  * test UserImpl action
@@ -25,7 +26,7 @@ import com.online.ecommarce.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class UserServiceImplTest {
+class UserServiceImplTest extends JUnitObjectServiceImpl {
 	
 	@InjectMocks
 	private UserServiceImpl mockUserImpl;
@@ -43,16 +44,10 @@ class UserServiceImplTest {
 	 */
 	@Test
 	public void test_UserRegistation_When_Success() {
-		UserRequest userRequest = new UserRequest();
-		userRequest.setUserEmailId("user04");
-		userRequest.setUserName("Ranjeet");
-		
+		UserRequest userRequest = userRequestObj();
 		User userInfo = new User();
-		User userEntity = new User();
-		userEntity.setUserEmailId("4");
-		userEntity.setUserName("Ranjeet");
+		User userEntity = userEntityObj();
 		when(userReposiotry.save(Mockito.any())).thenReturn(userEntity);
-		
 		userInfo = mockUserImpl.userRegistation(userRequest);
 		Assert.assertEquals(userInfo.getUserEmailId(), userEntity.getUserEmailId());
 	}

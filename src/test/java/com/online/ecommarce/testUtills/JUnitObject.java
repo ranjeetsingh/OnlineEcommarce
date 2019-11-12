@@ -3,11 +3,16 @@
  */
 package com.online.ecommarce.testUtills;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.online.ecommarce.apputil.AppConstant;
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
+import com.online.ecommarce.model.ResponseModel;
 
 /**
  * Create object for using unit test
@@ -78,4 +83,14 @@ public class JUnitObject {
 		cart.setCartId("1");
 		return cart;
 	}
+	
+	/**
+	 * Create object for ResponseEntity<Object> 
+	 * @return ResponseEntity<Object>
+	 */
+	public ResponseEntity<Object> commonResponseEntity() {
+		return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.PLEASE_ENTER_CART_ID, null, 1),
+				HttpStatus.NOT_FOUND);
+	}
+	
 }

@@ -21,10 +21,8 @@ import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartItemResponse;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.model.CartSummaryResponse;
-import com.online.ecommarce.model.TestProductCartItem;
 import com.online.ecommarce.model.ProductCartItem;
 import com.online.ecommarce.model.ResponseModel;
-import com.online.ecommarce.repository.ProductRepository;
 
 /**
  * All operations Related to Cart

@@ -62,18 +62,12 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	@Test
 	public void test_AddToCart_When_Success() {
 		CartRequest cartRequest = cartRequestObj();
-		//cartRequest.setCartId("cart001");
-		
 		Product product = findProductObj();
-		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		
 		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
 		Cart cartEntity = cartObj();
-		
 		when(cartRepository.save(Mockito.any())).thenReturn(cartEntity);
-		
 		String getStatus = mockCartImpl.addToCart(cartRequest); 
 		Assert.assertEquals(AppConstant.ADD_PRODUCT_SUCCESS, getStatus);
 		
@@ -86,9 +80,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	@Test
 	public void test_UpdateCartQuantity_When_Success() {
 		CartRequest cartRequest = cartRequestObj();
-		
 		Product product = findProductObj();
-		
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
 		when(serviceValidator.checkItemQuantity(cartRequest)).thenReturn(true);
@@ -103,20 +95,11 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	
 	@Test
 	public void test_RemoveProductFromCart__When_Success() {
-		CartRequest cartRequest = new CartRequest();
-		cartRequest.setProductId(30);
-		cartRequest.setUserId(1);
-		cartRequest.setCartId("1");
-		
-		Cart cart =cartObj();
-		//when(cartRepository.getProdcutDetailsFromCart(Mockito.anyLong(), Mockito.anyLong())).thenReturn(cart);
+		CartRequest cartRequest = cartRequestObj();
 		when(cartRepository.RemoveItemFromCart(Mockito.anyLong(),Mockito.anyString())).thenReturn(1);
-
 		Product product = findProductObj();
 		Optional<Product> productList= Optional.of(product);
 		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
-		
-		
 		String getStatus = mockCartImpl.removeProductFromCart(cartRequest);
 		Assert.assertEquals(AppConstant.ITEM_DELETED_SUCCESS, getStatus);
 		
@@ -129,12 +112,9 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	@Test
 	public void test_ClearAllItemFromCart_When_Success() {
 		CartRequest cartRequest = cartRequestObj();
-		
 		Cart cart =cartObj();
 		List<Cart> cartListDetails = new ArrayList<Cart>();
 		cartListDetails.add(cart);
-		
-		//when(cartRepository.getUserExists(Mockito.anyLong())).thenReturn(cartListDetails);
 		when(cartRepository.ClearAllItemFromCart(Mockito.anyString())).thenReturn(1);
 		String getStatus = mockCartImpl.removeAllItemFromCart(cartRequest);
 		Assert.assertEquals(AppConstant.ALL_ITEM_DELETED, getStatus);
@@ -148,15 +128,10 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	 */
 	@Test
 	public void test_GetCartSummary_When_Success() {
-		CartRequest cartRequest = new CartRequest();
-		cartRequest.setCartId("1");
-		
-		CartSummary cartSummary = new CartSummary();
-		cartSummary.setId(1);
-		cartSummary.setActioDescription("Product Add");
+		CartRequest cartRequest = cartRequestObj();
+		CartSummary cartSummary = cartSummaryObj();
 		List<CartSummary> cartListDetails = new ArrayList<CartSummary>();
 		cartListDetails.add(cartSummary);
-		
 		when(cartSummaryRepo.getCartSummary(Mockito.anyString())).thenReturn(cartListDetails);
 		List<CartSummary> cartListResponse = mockCartImpl.getCartSummary(cartRequest);
 		Assert.assertEquals(1, cartListResponse.size());
@@ -167,16 +142,10 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	 */
 	@Test
 	public void test_fetchUserCartItem_When_Success() {
-		CartItemRequest cartRequest = new CartItemRequest();
-		cartRequest.setCartId("1");
-		
-		Cart cartData = new Cart();
-		cartData.setId(1);
-		cartData.setProductOrderQuantity(1);
-		cartData.setCartId("1");
+		CartItemRequest cartRequest =cartItemObj();
+		Cart cartData = cartObj();
 		List<Cart> cartListDetails = new ArrayList<Cart>();
 		cartListDetails.add(cartData);
-		
 		when(cartRepository.fetchCartItemByCartId(Mockito.anyString())).thenReturn(cartListDetails);
 		List<Cart> cartListResponse = mockCartImpl.fetchUserCartItem(cartRequest);
 		Assert.assertEquals(1, cartListResponse.size());

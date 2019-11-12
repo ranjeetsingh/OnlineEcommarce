@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.model.ProductRequest;
 import com.online.ecommarce.repository.ProductRepository;
+import com.online.ecommarce.testUtills.JUnitObjectServiceImpl;
 
 /**
  * test product action
@@ -27,7 +28,7 @@ import com.online.ecommarce.repository.ProductRepository;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ProductServiceImplTest {
+class ProductServiceImplTest extends JUnitObjectServiceImpl{
 	@InjectMocks
 	private ProductServiceImpl productImpl;
 
@@ -44,29 +45,11 @@ class ProductServiceImplTest {
 	 */
 	@Test
 	public void test_AddProduct_When_Success() {
-		ProductRequest  prodReq = new ProductRequest();
-		prodReq.setCatlogId(1);
-		prodReq.setProductName("iPhone 10");
-		prodReq.setProductPrice(90000);
-		prodReq.setProductQuantity(15);
-		prodReq.setProductAvailabilty("H");
-		prodReq.setProductDescription("Black Color, 16GB RAM");
-		
-		Product productEntity = new Product();
-		productEntity.setCatlogId(1);
-		productEntity.setProductName("iPhone 10");
-		productEntity.setProductPrice(90000);
-		productEntity.setProductQuantity(15);
-		productEntity.setProductDescription("Black Color, 16GB RAM");
-		
+		ProductRequest  prodReq = productRequestObj();
+		Product productEntity = productEntityObj();
 		when(productRepository.save(Mockito.any())).thenReturn(productEntity);
-		Product productInfo =new Product();
-		productInfo = productImpl.addProduct(prodReq);
+		Product productInfo = productImpl.addProduct(prodReq);
 		Assert.assertEquals(productInfo.getProductName(), productEntity.getProductName());
-		
-		
-		
-		
 	}
 
 }

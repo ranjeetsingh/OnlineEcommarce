@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.online.ecommarce.apputil.AppConstant;
 import com.online.ecommarce.controller.ivalidator.IDataRequestValidator;
 import com.online.ecommarce.entity.Product;
-import com.online.ecommarce.entity.User;
 import com.online.ecommarce.iservice.IProductService;
-import com.online.ecommarce.iservice.IUserService;
 import com.online.ecommarce.model.ProductRequest;
 import com.online.ecommarce.model.ProductResponse;
 import com.online.ecommarce.model.ResponseModel;
-import com.online.ecommarce.model.UserRequest;
-import com.online.ecommarce.model.UserResponse;
 
 /**
  * All operation related Product

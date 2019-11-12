@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.online.ecommarce.entity.Catlog;
 import com.online.ecommarce.model.CatlogRequest;
 import com.online.ecommarce.repository.CatlogRepository;
+import com.online.ecommarce.testUtills.JUnitObjectServiceImpl;
 
 /**
  * test category log
@@ -27,7 +28,7 @@ import com.online.ecommarce.repository.CatlogRepository;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class CatlogServiceImplTest {
+class CatlogServiceImplTest extends JUnitObjectServiceImpl {
 	
 	@InjectMocks
 	private CatlogServiceImpl catlogImpl;
@@ -44,18 +45,10 @@ class CatlogServiceImplTest {
 	 */
 	@Test
 	public void test_AddCatlog_When_Success() {
-		CatlogRequest catlogRequest = new CatlogRequest();
-		catlogRequest.setCatlogId("catlog04");
-		catlogRequest.setCatlogName("Washing Machine");
-		
-		Catlog catlog = new Catlog();
-		Catlog catlogEntity = new Catlog();
-		//catlogEntity.setCatlogId("1");
-		catlogEntity.setCatlogName("Cat01");
-		
+		CatlogRequest catlogRequest = catlogRequestObj();
+		Catlog catlogEntity = catlogEntityObj();
 		when(catlogRepository.save(Mockito.any())).thenReturn(catlogEntity);
-		
-		catlog = catlogImpl.addCatlog(catlogRequest);
+		Catlog catlog = catlogImpl.addCatlog(catlogRequest);
 		Assert.assertEquals(catlog.getCatlogName(),catlogEntity.getCatlogName());
 		
 		

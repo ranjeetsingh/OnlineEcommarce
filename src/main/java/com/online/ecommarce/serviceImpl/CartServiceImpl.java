@@ -6,8 +6,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.online.ecommarce.apputil.AppConstant;
@@ -18,7 +16,6 @@ import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.iservice.ICartService;
 import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
-import com.online.ecommarce.model.ResponseModel;
 import com.online.ecommarce.repository.CartRepository;
 import com.online.ecommarce.repository.CartSummaryRepository;
 import com.online.ecommarce.repository.ProductRepository;

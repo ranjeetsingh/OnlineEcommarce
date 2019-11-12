@@ -3,19 +3,26 @@
  */
 package com.online.ecommarce.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.online.ecommarce.apputil.AppConstant;
+import com.online.ecommarce.controller.ivalidator.IDataRequestValidator;
+import com.online.ecommarce.entity.Product;
+import com.online.ecommarce.iservice.IProductService;
 import com.online.ecommarce.model.ProductRequest;
-import com.online.ecommarce.testUtills.JUnitUtils;
+import com.online.ecommarce.model.ResponseModel;
+import com.online.ecommarce.testUtills.JUnitObjectServiceImpl;
 
 /**
  * test for add product in product table
@@ -25,44 +32,65 @@ import com.online.ecommarce.testUtills.JUnitUtils;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ProductControllerTest extends JUnitUtils {
+class ProductControllerTest extends JUnitObjectServiceImpl {
 
-	/*
-	 * @Autowired private ProductController productController;
-	 */
-	@BeforeEach
-	public void setUp() {
-		super.setUp();
-	}
+	
+	@InjectMocks 
+	private ProductController productController;
+	@Mock
+	private IProductService productService;
+	@Mock
+	private IDataRequestValidator validatorService;
+	 
+	
 
 	/**
-	 * test for add product in table
+	 * test success for add product in table
 	 */
 	@Test
 	public void test_AddProduct_When_Success() {
-
-		String uri = "/addProduct";
-		try {
-			ProductRequest productRequest = new ProductRequest();
-			productRequest.setCatlogId(5);
-			productRequest.setProductName("Scooty");
-			productRequest.setProductPrice(58000);
-			productRequest.setProductQuantity(50);
-			productRequest.setProductAvailabilty("H");
-			productRequest.setProductDescription("Black color ");
-
-			String inputJson = super.mapToJson(productRequest);
-			MvcResult mvcResult = mvc.perform(
-					MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
-					.andReturn();
-
-			int status = mvcResult.getResponse().getStatus();
-			assertEquals(201, status);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+			ProductRequest productRequest =productRequestObj();
+			when(validatorService.validateProductNameAndDescription(productRequest)).thenReturn(null);
+			Product productData = productEntityObj();
+			when(productService.addProduct(Mockito.any())).thenReturn(productData);
+			ResponseEntity<Object> responseEntity = productController.addProductDetails(productRequest);
+			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
 	}
-
+	
+	/**
+	 * test fail for add product in table
+	 */
+	@Test
+	public void test_AddProduct_When_Fail() {
+			ProductRequest productRequest =productRequestObj();
+			ResponseEntity<Object> getResponseEntity = commonResponseEntity();
+			when(validatorService.validateProductNameAndDescription(productRequest)).thenReturn(getResponseEntity);
+			Product productData = productEntityObj();
+			when(productService.addProduct(Mockito.any())).thenReturn(productData);
+			ResponseEntity<Object> responseEntity = productController.addProductDetails(productRequest);
+			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+	}
+	
+	
+	/**
+	 * test Exception for add product in table
+	 */
+	@Test
+	public void test_AddProduct_When_Exception() {
+			ProductRequest productRequest =productRequestObj();
+			when(validatorService.validateProductNameAndDescription(productRequest)).thenThrow(NullPointerException.class);
+			Product productData = productEntityObj();
+			when(productService.addProduct(null)).thenReturn(productData);
+			ResponseEntity<Object> responseEntity = productController.addProductDetails(productRequest);
+			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(500);
+	}
+	
+	/**
+	 * Create object for ResponseEntity<Object> 
+	 * @return ResponseEntity<Object>
+	 */
+	public ResponseEntity<Object> commonResponseEntity() {
+		return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.PLEASE_ENTER_CART_ID, null, 1),
+				HttpStatus.NOT_FOUND);
+	}
 }

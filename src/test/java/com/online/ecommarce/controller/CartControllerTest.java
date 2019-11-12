@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,7 +24,6 @@ import com.online.ecommarce.iservice.ICartService;
 import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.testUtills.JUnitObject;
-import com.online.ecommarce.testUtills.JUnitUtils;
 
 /**
  * Test case related to cart item
@@ -46,13 +44,12 @@ class CartControllerTest extends JUnitObject {
 	private ICartService cartService;
 
 	/**
-	 * test add product in cart when success
+	 * test success add product in cart when success
 	 */
 	@Test
 	public void test_AddToCart_When_Success() {
 		CartRequest cartRequest = cartRequestObj();
 		when(validatorService.validateUser(cartRequest)).thenReturn(null);
-
 		Product product = findProductObj();
 		Optional<Product> productList = Optional.of(product);
 		when(cartService.fetchProductDetails(Mockito.anyLong())).thenReturn(productList);
@@ -63,7 +60,40 @@ class CartControllerTest extends JUnitObject {
 	}
 
 	/**
-	 * test update quantity in cart
+	 * test fail add product in cart when success
+	 */
+	@Test
+	public void test_AddToCart_When_Fail() {
+		CartRequest cartRequest = cartRequestObj();
+		ResponseEntity<Object> getResponseEntity = commonResponseEntity();
+		when(validatorService.validateUser(cartRequest)).thenReturn(getResponseEntity);
+		Product product = findProductObj();
+		Optional<Product> productList = Optional.of(product);
+		when(cartService.fetchProductDetails(Mockito.anyLong())).thenReturn(productList);
+		when(validatorService.checkProductOutOfStack(productList)).thenReturn(false);
+		ResponseEntity<Object> responseEntity = cartController.addProductInCart(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+	}
+	
+	/**
+	 * test exception add product in cart when success
+	 */
+	@Test
+	public void test_AddToCart_When_Exception() {
+		CartRequest cartRequest = cartRequestObj();
+		when(validatorService.validateUser(cartRequest)).thenThrow(NullPointerException.class);
+		Product product = findProductObj();
+		Optional<Product> productList = Optional.of(product);
+		when(cartService.fetchProductDetails(Mockito.anyLong())).thenReturn(productList);
+		when(validatorService.checkProductOutOfStack(productList)).thenReturn(false);
+		ResponseEntity<Object> responseEntity = cartController.addProductInCart(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(500);
+
+	}
+
+	
+	/**
+	 * test success for update quantity in cart
 	 */
 	@Test
 	public void test_UpdateCartItemQuantity_When_Success() {
@@ -87,20 +117,36 @@ class CartControllerTest extends JUnitObject {
 	@Test
 	public void test_UpdateCartItemQuantity_When_Fail() {
 		CartRequest cartRequest = cartRequestObj();
+		ResponseEntity<Object> getResponseEntity = commonResponseEntity();
+		when(validatorService.validateCartId(cartRequest)).thenReturn(getResponseEntity);
+		Product product = findProductObj();
+		Optional<Product> productList = Optional.of(product);
+		when(cartService.fetchProductDetails(Mockito.anyLong())).thenReturn(productList);
+		ResponseEntity<Object> responseEntity = cartController.updateOrderItemQuantity(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
 
-		when(validatorService.validateCartId(cartRequest)).thenReturn(null);
+	}
+	
+	/**
+	 * test Exception quantity in cart fail
+	 */
+	@Test
+	public void test_UpdateCartItemQuantity_When_Excetion() {
+		CartRequest cartRequest = cartRequestObj();
+
+		when(validatorService.validateCartId(cartRequest)).thenThrow(NullPointerException.class);
 
 		Product product = findProductObj();
 
 		Optional<Product> productList = Optional.of(product);
 		when(cartService.fetchProductDetails(Mockito.anyLong())).thenReturn(productList);
 		ResponseEntity<Object> responseEntity = cartController.updateOrderItemQuantity(cartRequest);
-		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(500);
 
 	}
 
 	/**
-	 * test remove item from cart
+	 * test success for remove item from cart
 	 */
 	@Test
 	public void test_RemoveCartItem_When_Success() {
@@ -113,7 +159,33 @@ class CartControllerTest extends JUnitObject {
 	}
 
 	/**
-	 * test when user want to remove all item from cart
+	 * test fail for remove item from cart
+	 */
+	@Test
+	public void test_RemoveCartItem_When_Fail() {
+		CartRequest cartRequest = cartRequestObj();
+		ResponseEntity<Object> getResponseEntity = commonResponseEntity();
+		when(validatorService.validateCartId(cartRequest)).thenReturn(getResponseEntity);
+		ResponseEntity<Object> responseEntity = cartController.removeSingleItemFromCart(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+
+	}
+	
+	/**
+	 * test Exception for remove item from cart
+	 */
+	@Test
+	public void test_RemoveCartItem_When_Exception() {
+		CartRequest cartRequest = cartRequestObj();
+		when(validatorService.validateCartId(cartRequest)).thenThrow(NullPointerException.class);
+		ResponseEntity<Object> responseEntity = cartController.removeSingleItemFromCart(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(500);
+
+	}
+
+	
+	/**
+	 * test success when user want to remove all item from cart
 	 */
 	@Test
 	public void test_ClearCartItem_When_Success() {
@@ -124,6 +196,33 @@ class CartControllerTest extends JUnitObject {
 		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
 
 	}
+	
+	/**
+	 * test fail when user want to remove all item from cart
+	 */
+	@Test
+	public void test_ClearCartItem_When_Fail() {
+		CartRequest cartRequest = cartRequestObj();
+		ResponseEntity<Object> getResponseEntity = commonResponseEntity();
+		when(validatorService.validateCartId(cartRequest)).thenReturn(getResponseEntity);
+		ResponseEntity<Object> responseEntity = cartController.removeAllItemFromCart(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+
+	}
+	
+	/**
+	 * test exception when user want to remove all item from cart
+	 */
+	@Test
+	public void test_ClearCartItem_When_Exception() {
+		CartRequest cartRequest = cartRequestObj();
+		when(validatorService.validateCartId(cartRequest)).thenThrow(NullPointerException.class);
+		ResponseEntity<Object> responseEntity = cartController.removeAllItemFromCart(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(500);
+
+	}
+	
+	
 
 	/**
 	 * test for get user cart summary list
@@ -148,23 +247,32 @@ class CartControllerTest extends JUnitObject {
 	}
 
 	/**
-	 * test for get user cart summary list fail
+	 * test fail for get user cart summary list 
 	 */
 	@Test
 	public void test_Fetch_CartSummary_When_Fail() {
 
-		try {
 			CartRequest cartRequest = cartRequestObj();
-			when(validatorService.validateCartId(cartRequest)).thenReturn(null);
+			ResponseEntity<Object> getResponseEntity = commonResponseEntity();
+			when(validatorService.validateCartId(cartRequest)).thenReturn(getResponseEntity);
 			List<CartSummary> cartSummaryList = new ArrayList<>();
 			when(cartService.getCartSummary(cartRequest)).thenReturn(cartSummaryList);
 			ResponseEntity<Object> responseEntity = cartController.fetchCartSummary(cartRequest);
-			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+	}
+	
+	/**
+	 * test exception for get user cart summary list 
+	 */
+	@Test
+	public void test_Fetch_CartSummary_When_Exception() {
 
+			CartRequest cartRequest = cartRequestObj();
+			when(validatorService.validateCartId(cartRequest)).thenThrow(NullPointerException.class);
+			List<CartSummary> cartSummaryList = new ArrayList<>();
+			when(cartService.getCartSummary(cartRequest)).thenReturn(cartSummaryList);
+			ResponseEntity<Object> responseEntity = cartController.fetchCartSummary(cartRequest);
+			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(500);
 	}
 
 	/**
@@ -190,4 +298,29 @@ class CartControllerTest extends JUnitObject {
 		ResponseEntity<Object> responseEntity = cartController.fetchCartItem(cartRequest);
 		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
 	}
+	
+	/**
+	 * test fail for cart summary on the basis of cart ID
+	 */
+	@Test
+	public void test_fetch_CartItem_When_Fail() {
+
+		CartItemRequest cartRequest = cartItemObj();
+
+		Cart cart = cartObj();
+		List<Cart> cartListDetails = new ArrayList<Cart>();
+		//cartListDetails.add(cart);
+
+		when(cartService.fetchUserCartItem(cartRequest)).thenReturn(cartListDetails);
+
+		Product product = findProductObj();
+
+		Optional<Product> productList = Optional.of(product);
+
+		when(cartService.fetchProductDetails(Mockito.anyLong())).thenReturn(productList);
+
+		ResponseEntity<Object> responseEntity = cartController.fetchCartItem(cartRequest);
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+	}
+	
 }
