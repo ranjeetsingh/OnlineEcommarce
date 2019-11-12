@@ -93,7 +93,7 @@ public interface IDataRequestValidator {
 	/**
 	 * Check product is out of stock or not
 	 * @param productData
-	 * @return
+	 * @return boolean
 	 */
 	boolean checkProductOutOfStack(Optional<Product> productData);
 

@@ -1,7 +1,5 @@
 package com.online.ecommarce.model;
 
-import java.util.List;
-
 /**
  * Common Response Model for All Api
  * @author RanjeetSi

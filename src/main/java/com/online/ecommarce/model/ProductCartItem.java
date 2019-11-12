@@ -1,7 +1,5 @@
 package com.online.ecommarce.model;
 
-import com.online.ecommarce.entity.Product;
-
 /**
  * ProductCartItem for creating response
  * 

@@ -18,12 +18,9 @@ public class Cart {
 	private long id;
 	private String cartId;
 	private long userId;
-	// private String catlogId;
 	private long productId;
-	// private String productName;
 	private int productOrderQuantity;
 	private double productPrice;
-	// private String productStatus;
 
 	public long getId() {
 		return id;

@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.online.ecommarce.entity.Cart;
-import com.online.ecommarce.entity.CartSummary;
 
 /**
  * Cart Repository for cart table.

@@ -16,7 +16,7 @@ public interface IBusinessValidator {
 	/**
 	 * Check product quantity
 	 * @param cartRequest
-	 * @return
+	 * @return boolean
 	 */
 	boolean checkItemQuantity(CartRequest cartRequest);
 }

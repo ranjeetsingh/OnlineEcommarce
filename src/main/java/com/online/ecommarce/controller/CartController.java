@@ -64,7 +64,6 @@ public class CartController {
 				} else {
 					addCartStatusMessage = AppConstant.PRODUCT_NOT_EXISTS;
 				}
-				// String addCartDataDetails = cartService.addToCart(request);
 				responseEntity = new ResponseEntity<Object>(new ResponseModel(true, addCartStatusMessage, null, 0),
 						HttpStatus.CREATED);
 			}
@@ -103,7 +102,6 @@ public class CartController {
 				} else {
 					updateCartItemStatusMessage = AppConstant.PRODUCT_NOT_EXISTS;
 				}
-				// String updateCartDataDetails = cartService.updateCartQuantity(request);
 				responseEntity = new ResponseEntity<Object>(
 						new ResponseModel(true, updateCartItemStatusMessage, null, 0), HttpStatus.OK);
 			}

@@ -150,4 +150,27 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 		Assert.assertEquals(1, cartListResponse.size());
 	}
 	
+	/**
+	 * Fetch fetchProductDetails when test cases success
+	 */
+	@Test
+	public void test_fetchProductDetails_When_Success() {
+		Product product = findProductObj();
+		Optional<Product> productList= Optional.of(product);
+		when(productRepository.findById(Mockito.anyLong())).thenReturn(productList);
+		Optional<Product> productData = mockCartImpl.fetchProductDetails(Mockito.anyLong());
+		Assert.assertEquals(1, productData.get().getId());
+	}
+	
+	/**
+	 * Fetch fetchProductDetails when test cases exception
+	 */
+	@Test
+	public void test_fetchProductDetails_When_Exception() {
+		when(productRepository.findById(Mockito.anyLong())).thenThrow(NullPointerException.class);
+		Optional<Product> productData = mockCartImpl.fetchProductDetails(Mockito.anyLong());
+		Assert.assertEquals(null, productData);
+	}
+	
+	
 }

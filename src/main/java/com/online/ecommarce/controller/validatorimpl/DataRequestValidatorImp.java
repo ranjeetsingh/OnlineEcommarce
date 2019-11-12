@@ -26,7 +26,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method check cart id is empty
-	 * 
 	 * @param CartRequest
 	 * @return boolean
 	 */
@@ -42,7 +41,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method validate user id
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 */
@@ -57,7 +55,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method validate cart id
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 */
@@ -72,7 +69,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method check user name and user email is empty
-	 * 
 	 * @param CartRequest
 	 * @return ResponseEntity<Object>
 	 */
@@ -87,7 +83,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method check user id is 0
-	 * 
 	 * @param CartRequest
 	 * @return boolean
 	 */
@@ -104,7 +99,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method validate User name and user email
-	 * 
 	 * @param UserRequest
 	 * @return ResponseEntity<Object>
 	 */
@@ -119,7 +113,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method check user name and user email is empty
-	 * 
 	 * @param ProductRequest
 	 * @return boolean
 	 */
@@ -135,7 +128,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method validate product name and product description
-	 * 
 	 * @param ProductRequest
 	 * @return ResponseEntity<Object>
 	 */
@@ -150,7 +142,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method check catlogName is empty
-	 * 
 	 * @param CatlogRequest
 	 * @return boolean
 	 */
@@ -165,7 +156,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 
 	/**
 	 * This method validate CatlogName
-	 * 
 	 * @param ProductRequest
 	 * @return ResponseEntity<Object>
 	 */
@@ -179,7 +169,6 @@ public class DataRequestValidatorImp implements IDataRequestValidator {
 	}
 	/**
 	 * This method check product in stock or not
-	 * 
 	 * @param Optional<Product>
 	 * @return boolean
 	 */
