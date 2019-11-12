@@ -43,6 +43,7 @@ class CatLogControllerTest extends JUnitObjectServiceImpl {
 
 	/**
 	 * test pass when add category in category table
+	 * expected result 201
 	 */
 	@Test
 	public void test_AddCatlog_When_Success() {
@@ -55,6 +56,7 @@ class CatLogControllerTest extends JUnitObjectServiceImpl {
 	}
 	/**
 	 * test fail when add category in category table
+	 * expected result  404
 	 */
 	@Test
 	public void test_AddCatlog_When_Fail() {
@@ -71,6 +73,7 @@ class CatLogControllerTest extends JUnitObjectServiceImpl {
 	
 	/**
 	 * test Exception when add category in category table
+	 * expected result 500
 	 */
 	@Test
 	public void test_AddCatlog_When_Exception() {

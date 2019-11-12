@@ -44,6 +44,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test success add product in cart when success
+	 * expected result   201
 	 */
 	@Test
 	public void test_AddToCart_When_Success() {
@@ -59,7 +60,8 @@ class CartControllerTest extends JUnitObject {
 	}
 
 	/**
-	 * test fail add product in cart when success
+	 * test fail add product in cart
+	 * expected result   404
 	 */
 	@Test
 	public void test_AddToCart_When_Fail() {
@@ -75,7 +77,8 @@ class CartControllerTest extends JUnitObject {
 	}
 	
 	/**
-	 * test exception add product in cart when success
+	 * test exception add product in cart 
+	 * expected result   500
 	 */
 	@Test
 	public void test_AddToCart_When_Exception() {
@@ -93,6 +96,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test success for update quantity in cart
+	 * expected result   200
 	 */
 	@Test
 	public void test_UpdateCartItemQuantity_When_Success() {
@@ -112,6 +116,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test update quantity in cart fail
+	 * expected result   404
 	 */
 	@Test
 	public void test_UpdateCartItemQuantity_When_Fail() {
@@ -127,7 +132,8 @@ class CartControllerTest extends JUnitObject {
 	}
 	
 	/**
-	 * test Exception quantity in cart fail
+	 * test Exception quantity in cart 
+	 * expected result   500
 	 */
 	@Test
 	public void test_UpdateCartItemQuantity_When_Excetion() {
@@ -146,6 +152,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test success for remove item from cart
+	 * expected result   200
 	 */
 	@Test
 	public void test_RemoveCartItem_When_Success() {
@@ -159,6 +166,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test fail for remove item from cart
+	 * expected result   404
 	 */
 	@Test
 	public void test_RemoveCartItem_When_Fail() {
@@ -172,6 +180,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test Exception for remove item from cart
+	 * expected result   500
 	 */
 	@Test
 	public void test_RemoveCartItem_When_Exception() {
@@ -185,6 +194,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test success when user want to remove all item from cart
+	 * expected result   200
 	 */
 	@Test
 	public void test_ClearCartItem_When_Success() {
@@ -198,6 +208,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test fail when user want to remove all item from cart
+	 * expected result   404
 	 */
 	@Test
 	public void test_ClearCartItem_When_Fail() {
@@ -211,6 +222,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test exception when user want to remove all item from cart
+	 * expected result   500
 	 */
 	@Test
 	public void test_ClearCartItem_When_Exception() {
@@ -225,6 +237,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test for get user cart summary list
+	 * expected result   200
 	 */
 	@Test
 	public void test_Fetch_CartSummary_When_Success() {
@@ -247,6 +260,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test fail for get user cart summary list 
+	 * expected result   404
 	 */
 	@Test
 	public void test_Fetch_CartSummary_When_Fail() {
@@ -262,6 +276,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test exception for get user cart summary list 
+	 * expected result   500
 	 */
 	@Test
 	public void test_Fetch_CartSummary_When_Exception() {
@@ -276,6 +291,7 @@ class CartControllerTest extends JUnitObject {
 
 	/**
 	 * test success for cart summary on the basis of cart ID
+	 * expected result   200
 	 */
 	@Test
 	public void test_fetch_CartItem_When_Success() {
@@ -294,6 +310,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test fail for cart summary on the basis of cart ID
+	 *  expected result   404
 	 */
 	@Test
 	public void test_fetch_CartItem_When_Fail() {
@@ -313,6 +330,7 @@ class CartControllerTest extends JUnitObject {
 	
 	/**
 	 * test exception for cart summary on the basis of cart ID
+	 * expected result   result   500
 	 */
 	@Test
 	public void test_fetch_CartItem_When_Exception() {

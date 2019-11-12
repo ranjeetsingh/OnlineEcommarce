@@ -55,7 +55,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	} 
 	
 	/**
-	 * add to cart test cases
+	 * add item in cart is success
 	 */
 	
 	@Test
@@ -73,7 +73,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	}
 	
 	/**
-	 * update product quantity in cart test cases
+	 * update product quantity in cart test cases success
 	 */
 	
 	@Test
@@ -89,7 +89,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	}
 	
 	/**
-	 * remove product quantity in cart test cases
+	 * remove product quantity in cart test cases success
 	 */
 	
 	@Test
@@ -105,7 +105,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	}
 	
 	/**
-	 * clear all product from cart test cases
+	 * clear all product from cart test cases success
 	 */
 	
 	@Test
@@ -123,7 +123,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	}
 	
 	/**
-	 * get user cart summary test cases
+	 * get user cart summary test cases success
 	 */
 	@Test
 	public void test_GetCartSummary_When_Success() {

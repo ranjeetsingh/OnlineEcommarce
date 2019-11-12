@@ -42,9 +42,24 @@ class UserControllerTest extends JUnitObjectServiceImpl {
 	
 	/**
 	 * test success for user registration
+	 * expected result 201
 	 */
 	@Test
 	public void test_UserRegister_When_Success() {
+			UserRequest userRequest = userRequestObj();
+			when(validatorService.validateUserNameAndUserEmail(userRequest)).thenReturn(null);
+			User userData = userEntityObj();
+			when(userService.userRegistation(Mockito.any())).thenReturn(userData);
+			ResponseEntity<Object> responseEntity = userController.userRegister(userRequest);
+			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
+	}
+	
+	/**
+	 * test fail for user registration
+	 * expected result 404
+	 */
+	@Test
+	public void test_UserRegister_When_Fail() {
 			UserRequest userRequest = userRequestObj();
 			ResponseEntity<Object> getResponseEntity = commonResponseEntity();
 			when(validatorService.validateUserNameAndUserEmail(userRequest)).thenReturn(getResponseEntity);
@@ -55,20 +70,8 @@ class UserControllerTest extends JUnitObjectServiceImpl {
 	}
 	
 	/**
-	 * test fail for user registration
-	 */
-	@Test
-	public void test_UserRegister_When_Fail() {
-			UserRequest userRequest = userRequestObj();
-			when(validatorService.validateUserNameAndUserEmail(userRequest)).thenReturn(null);
-			User userData = userEntityObj();
-			when(userService.userRegistation(Mockito.any())).thenReturn(userData);
-			ResponseEntity<Object> responseEntity = userController.userRegister(userRequest);
-			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-	}
-	
-	/**
 	 * test Exception for user registration
+	 * expected result 500
 	 */
 	@Test
 	public void test_UserRegister_When_Exception() {

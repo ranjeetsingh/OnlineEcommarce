@@ -46,6 +46,7 @@ class ProductControllerTest extends JUnitObjectServiceImpl {
 
 	/**
 	 * test success for add product in table
+	 * expected result 201
 	 */
 	@Test
 	public void test_AddProduct_When_Success() {
@@ -59,6 +60,7 @@ class ProductControllerTest extends JUnitObjectServiceImpl {
 	
 	/**
 	 * test fail for add product in table
+	 * expected result 404
 	 */
 	@Test
 	public void test_AddProduct_When_Fail() {
@@ -74,6 +76,7 @@ class ProductControllerTest extends JUnitObjectServiceImpl {
 	
 	/**
 	 * test Exception for add product in table
+	 * expected result 500
 	 */
 	@Test
 	public void test_AddProduct_When_Exception() {
