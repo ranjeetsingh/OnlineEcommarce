@@ -10,7 +10,6 @@ import com.online.ecommarce.apputil.AppConstant;
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
-import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.model.ResponseModel;
 
@@ -49,6 +48,7 @@ public class JUnitObject {
 		cartRequest.setProductId(1);
 		cartRequest.setQuantity(4);
 		cartRequest.setUserId(1);
+		cartRequest.setCartId("1");
 		return cartRequest;
 	}
 	/**
@@ -64,11 +64,10 @@ public class JUnitObject {
 	 * create object of cart item
 	 * @return CartItemRequest
 	 */
-	public CartItemRequest cartItemObj() {
-		CartItemRequest cartRequest = new CartItemRequest();
-		cartRequest.setCartId("1");
-		return cartRequest;
-	}
+	/*
+	 * public CartItemRequest cartItemObj() { CartItemRequest cartRequest = new
+	 * CartItemRequest(); cartRequest.setCartId("1"); return cartRequest; }
+	 */
 	/**
 	 * Create Cart Obj
 	 * @return Cart

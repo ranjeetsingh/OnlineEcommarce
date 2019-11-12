@@ -22,7 +22,6 @@ import com.online.ecommarce.controller.ivalidator.IBusinessValidator;
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
-import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.repository.CartRepository;
 import com.online.ecommarce.repository.CartSummaryRepository;
@@ -142,7 +141,7 @@ class CartServiceImplTest extends JUnitObjectServiceImpl {
 	 */
 	@Test
 	public void test_fetchUserCartItem_When_Success() {
-		CartItemRequest cartRequest =cartItemObj();
+		CartRequest cartRequest =cartRequestObj();
 		Cart cartData = cartObj();
 		List<Cart> cartListDetails = new ArrayList<Cart>();
 		cartListDetails.add(cartData);

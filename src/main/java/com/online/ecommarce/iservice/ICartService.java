@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
-import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 /**
  *All card method implemented in cart service implementation class
@@ -46,10 +45,10 @@ public interface ICartService {
 	List<CartSummary> getCartSummary(CartRequest request);
 	/**
 	 * Method fetch cart item from cart
-	 * @param cartItemRequest
+	 * @param cartRequest
 	 * @return List<Cart>
 	 */
-	List<Cart> fetchUserCartItem(CartItemRequest request);
+	List<Cart> fetchUserCartItem(CartRequest request);
 	
 	/**
 	 * Method fetch Product details from product table

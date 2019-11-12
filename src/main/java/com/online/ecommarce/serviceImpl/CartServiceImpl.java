@@ -14,7 +14,6 @@ import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.iservice.ICartService;
-import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.repository.CartRepository;
 import com.online.ecommarce.repository.CartSummaryRepository;
@@ -200,7 +199,7 @@ public class CartServiceImpl implements ICartService {
 	 * @exception
 	 */
 	@Override
-	public List<Cart> fetchUserCartItem(CartItemRequest request) {
+	public List<Cart> fetchUserCartItem(CartRequest request) {
 		try {
 			//fetch cart items
 			List<Cart> fetchCartList = cartRepository.fetchCartItemByCartId(request.getCartId());

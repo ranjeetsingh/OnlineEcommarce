@@ -17,7 +17,6 @@ import com.online.ecommarce.entity.Cart;
 import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.iservice.ICartService;
-import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartItemResponse;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.model.CartSummaryResponse;
@@ -218,45 +217,61 @@ public class CartController {
 	 * @Exception
 	 */
 	@PostMapping("/fetchUserCartItem")
-	public ResponseEntity<Object> fetchCartItem(@RequestBody CartItemRequest request) {
-
-		// create product item list
-		List<ProductCartItem> productCartItemList = new ArrayList<>();
-		// get total product price
-		double totalProductPrice = 0;
-
-		// fetch cart item
-		List<Cart> cartItemRespo = cartService.fetchUserCartItem(request);
-		if (cartItemRespo != null) {
-			for (Cart cartItemDetails : cartItemRespo) {
-				// fetch product details
-				Optional<Product> productData = cartService.fetchProductDetails(cartItemDetails.getProductId());
-				Product productInfo = productData.get();
-				// calculate total price
-				totalProductPrice = totalProductPrice + cartItemDetails.getProductPrice();
-
-				
-				ProductCartItem productObj = new ProductCartItem(cartItemDetails.getProductId(),
-						productInfo.getProductName(), cartItemDetails.getProductPrice(),
-						cartItemDetails.getProductOrderQuantity(), productInfo.getProductAvailability(),
-						productInfo.getProductDescription());
-				 
-				//ProductCartItem productObj = new ProductCartItem(productInfo);
-				productCartItemList.add(productObj);
-
+	public ResponseEntity<Object> fetchCartItem(@RequestBody CartRequest request) {
+		ResponseEntity<Object> responseEntity = null;
+		try {
+			// ValidatorFrameWork for Data Validation for cartId
+			responseEntity = validatorService.validateCartId(request);
+			// check responseEntity is null then fetch data from cart item
+			if (responseEntity == null) {
+				// create product item list
+				List<ProductCartItem> productCartItemList = new ArrayList<>();
+				// get total product price
+				double totalProductPrice = 0;
+				// fetch cart item
+				List<Cart> cartItemRespo = cartService.fetchUserCartItem(request);
+				if (cartItemRespo != null) {
+					for (Cart cartItemDetails : cartItemRespo) {
+						// fetch product details
+						Optional<Product> productData = cartService.fetchProductDetails(cartItemDetails.getProductId());
+						// calculate total price
+						totalProductPrice = totalProductPrice + cartItemDetails.getProductPrice();
+						// put data in ProductCartItem model
+						ProductCartItem productObj = cartItemObject(cartItemDetails, productData.get());
+						// ProductCartItem productObj = new ProductCartItem(productInfo);
+						productCartItemList.add(productObj);
+					}
+				}
+				CartItemResponse cartItemResponse = new CartItemResponse(request.getCartId(), totalProductPrice,
+						productCartItemList);
+				// check size of item in cart list
+				if (cartItemRespo != null && cartItemRespo.size() == 0) {
+					responseEntity = new ResponseEntity<Object>(
+							new ResponseModel(true, AppConstant.NO_ITEM_IN_CART, null, 0), HttpStatus.OK);
+				} else {
+					responseEntity = new ResponseEntity<Object>(
+							new ResponseModel(true, AppConstant.USER_CART_ITEM_IN_LIST, cartItemResponse, 0),
+							HttpStatus.OK);
+				}
 			}
+		} catch (Exception e) {
+			responseEntity = new ResponseEntity<Object>(new ResponseModel(false, e.getMessage(), null, 0),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		CartItemResponse cartItemResponse = new CartItemResponse(request.getCartId(), totalProductPrice,
-				productCartItemList);
-
-		// check size of item in cart list
-		if (cartItemRespo != null && cartItemRespo.size() == 0) {
-			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.NO_ITEM_IN_CART, null, 0), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.USER_CART_ITEM_IN_LIST, cartItemResponse, 0),
-					HttpStatus.OK);
-		}
+		return responseEntity;
+	}
+	/**
+	 * set the productCart item in ProductCartItem Model
+	 * @param cartItemDetails
+	 * @param productInfo
+	 * @return ProductCartItem
+	 */
+	private ProductCartItem cartItemObject(Cart cartItemDetails, Product productInfo) {
+		ProductCartItem productObj = new ProductCartItem(cartItemDetails.getProductId(),
+				productInfo.getProductName(), cartItemDetails.getProductPrice(),
+				cartItemDetails.getProductOrderQuantity(), productInfo.getProductAvailability(),
+				productInfo.getProductDescription());
+		return productObj;
 	}
 
 }

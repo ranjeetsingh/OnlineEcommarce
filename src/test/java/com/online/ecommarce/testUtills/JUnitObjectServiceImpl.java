@@ -8,7 +8,6 @@ import com.online.ecommarce.entity.CartSummary;
 import com.online.ecommarce.entity.Catlog;
 import com.online.ecommarce.entity.Product;
 import com.online.ecommarce.entity.User;
-import com.online.ecommarce.model.CartItemRequest;
 import com.online.ecommarce.model.CartRequest;
 import com.online.ecommarce.model.CatlogRequest;
 import com.online.ecommarce.model.ProductRequest;
@@ -70,11 +69,10 @@ public class JUnitObjectServiceImpl {
 	 * 
 	 * @return CartItemRequest
 	 */
-	public CartItemRequest cartItemObj() {
-		CartItemRequest cartItemRequest = new CartItemRequest();
-		cartItemRequest.setCartId("1");
-		return cartItemRequest;
-	}
+	/*
+	 * public CartItemRequest cartItemObj() { CartItemRequest cartItemRequest = new
+	 * CartItemRequest(); cartItemRequest.setCartId("1"); return cartItemRequest; }
+	 */
 
 	/**
 	 * Create Cart Obj
