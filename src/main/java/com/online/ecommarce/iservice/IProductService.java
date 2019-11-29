@@ -15,5 +15,12 @@ public interface IProductService {
 	 */
 	Product addProduct(ProductRequest request);
 	
+	/**
+	 * fetch item in product table
+	 * @param productRequest
+	 * @return Product
+	 */
+	Product fetchProduct(long productId);
+	
 
 }

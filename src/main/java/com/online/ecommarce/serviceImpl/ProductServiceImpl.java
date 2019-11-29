@@ -42,5 +42,15 @@ public class ProductServiceImpl implements IProductService{
 			return null;
 		}
 	}
-
+	/**
+	 * This method use to  fetch product information in product tbl
+	 * @param ProductRequest
+	 * @return Product
+	 */
+	
+	@Override
+	public Product fetchProduct(long productId) {
+		Product productData = productRepository.fetchProdcutDetails(productId);
+		return productData;
+	}
 }
